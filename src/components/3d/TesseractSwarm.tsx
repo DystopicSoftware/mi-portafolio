@@ -156,6 +156,7 @@ function SingleTesseract({ basePos, color, scale, category }: { basePos: THREE.V
                 techStack={projectsData[category].techStack}
                 githubUrl={projectsData[category].githubUrl}
                 liveUrl={projectsData[category].liveUrl}
+                onClose={() => usePortfolioStore.getState().setActiveCategory(null)}
               />
             ) : (
               <div className="w-64 p-4 text-cyan-400 font-mono text-sm border border-cyan-500 bg-black/80 rounded">

@@ -4,6 +4,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import AmbientDust from './components/3d/AmbientDust'
 import BioEmitterChip from './components/3d/BioEmitterChip'
 import TesseractSwarm from './components/3d/TesseractSwarm'
+import ResonanceMandala from './components/3d/ResonanceMandala'
 import { Hero } from './sections/Hero'
 import { usePortfolioStore } from './store/usePortfolioStore'
 
@@ -34,6 +35,7 @@ function App() {
             <AmbientDust />
             <BioEmitterChip />
             <TesseractSwarm />
+            <ResonanceMandala />
           </Suspense>
 
           <EffectComposer>

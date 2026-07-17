@@ -23,7 +23,7 @@ export function Hero() {
         }}
         transition={{ duration: 0.8, ease: 'easeOut', type: 'spring', bounce: 0.3 }}
         style={{ pointerEvents: activeCategory === null ? 'auto' : 'none' }}
-        className="bg-black/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl px-10 py-12 max-w-2xl w-full text-center"
+        className="bg-[#03070a]/40 backdrop-blur-3xl border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.8)] rounded-[2rem] px-10 py-12 max-w-2xl w-full text-center"
       >
         <motion.p
           initial={{ opacity: 0 }}
@@ -67,7 +67,7 @@ export function Hero() {
                 className="flex flex-col items-center gap-2 group cursor-pointer z-50 relative pointer-events-auto"
                 title={label}
               >
-                <div className={`p-4 rounded-xl transition-all duration-300 border ${isActive ? 'bg-cyan-500/20 border-cyan-400 shadow-[0_0_15px_rgba(0,255,204,0.4)]' : 'bg-white/5 border-white/10 group-hover:border-cyan-500/50'}`}>
+                <div className={`p-4 rounded-2xl transition-all duration-300 border ${isActive ? 'bg-cyan-500/20 border-cyan-400 shadow-[0_0_15px_rgba(0,255,204,0.4)]' : 'bg-white/5 border-white/5 group-hover:border-cyan-500/50'}`}>
                   <Icon className={`h-6 w-6 ${isActive ? 'text-cyan-300' : 'text-cyan-500'}`} />
                 </div>
                 <span className={`text-xs font-mono transition-colors hidden sm:block ${isActive ? 'text-cyan-300' : 'text-slate-400 group-hover:text-cyan-400'}`}>
