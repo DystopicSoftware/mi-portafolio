@@ -20,7 +20,7 @@ function SingleTesseract({ basePos, color, scale, category }: { basePos: THREE.V
     return pts;
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!groupRef.current || !lineRef.current?.material) return;
     const isIntercepted = activeCategory === category && category !== null;
 

@@ -1,4 +1,4 @@
-import { ExternalLink, GitBranch, X, Terminal } from 'lucide-react';
+import { ExternalLink, GitBranch, Terminal } from 'lucide-react';
 
 export interface ProjectHologramProps {
   title: string;
