@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import AmbientDust from './components/3d/AmbientDust'
@@ -13,6 +13,18 @@ function App() {
   const setActiveCategory = usePortfolioStore((state) => state.setActiveCategory);
 
   const activeProject = activeCategory ? projectsData[activeCategory] : null;
+
+  const uiContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (uiContainerRef.current) {
+      if (activeCategory !== null) {
+        uiContainerRef.current.setAttribute('inert', 'true');
+      } else {
+        uiContainerRef.current.removeAttribute('inert');
+      }
+    }
+  }, [activeCategory]);
 
   return (
     <>
@@ -43,9 +55,9 @@ function App() {
       </div>
 
       {/* ── Capa 1: Hero / UI 2D ── */}
-      {/* inert bloquea el 100% de la interacción cuando el modal está abierto */}
+      {/* inert bloquea el 100% de la interacción cuando el modal está abierto (via useEffect) */}
       <div
-        {...(activeCategory ? { inert: '' } : {})}
+        ref={uiContainerRef}
         className="relative z-10 flex flex-col min-h-screen text-slate-300"
       >
         <Hero />
