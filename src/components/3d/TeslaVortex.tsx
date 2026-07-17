@@ -3,34 +3,32 @@ import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import * as THREE from 'three';
 
-export default function TeslaVortex() {
+export default function TeslaVortex({ isActive }: { isActive: boolean }) {
   const groupRef = useRef<THREE.Group>(null!);
   const lineRef = useRef<any>(null!);
 
-  // Caché de Geometría: Generamos un mandala denso continuo (Sin re-renders)
+  // Caché de Geometría: Pares de segmentos aislados (Sin vértices parásitos entre capas)
   const mandalaPoints = useMemo(() => {
     const pts: THREE.Vector3[] = [];
-    const N = 9; // Base de Tesla 3-6-9
-    const layers = 8; // Capas concéntricas para alta densidad
+    const N = 9;
+    const layers = 8;
+
+    const getPoint = (layerIdx: number, step: number, index: number) => {
+      const radius = 4.5 - layerIdx * 0.45;
+      const zOffset = layerIdx * -0.15;
+      const angle = ((index * step) * 2 * Math.PI) / N - Math.PI / 2;
+      return new THREE.Vector3(radius * Math.cos(angle), radius * Math.sin(angle), zOffset);
+    };
 
     for (let layer = 0; layer < layers; layer++) {
-      const radius = 4.5 - layer * 0.45; 
-      const zOffset = layer * -0.15; // Ligera profundidad 3D
-      
-      // 1. Trazado del Eneágono (salto de 1)
-      for (let i = 0; i <= N; i++) {
-        const a = (i * 2 * Math.PI) / N;
-        pts.push(new THREE.Vector3(radius * Math.cos(a), radius * Math.sin(a), zOffset));
+      for (let i = 0; i < N; i++) {
+        pts.push(getPoint(layer, 1, i)); pts.push(getPoint(layer, 1, i + 1));
       }
-      // 2. Trazado de Estrella (salto de 2)
-      for (let i = 0; i <= N; i++) {
-        const a = ((i * 2) * 2 * Math.PI) / N;
-        pts.push(new THREE.Vector3(radius * Math.cos(a), radius * Math.sin(a), zOffset));
+      for (let i = 0; i < N; i++) {
+        pts.push(getPoint(layer, 2, i)); pts.push(getPoint(layer, 2, i + 1));
       }
-      // 3. Trazado de Estrella Aguda (salto de 4)
-      for (let i = 0; i <= N; i++) {
-        const a = ((i * 4) * 2 * Math.PI) / N;
-        pts.push(new THREE.Vector3(radius * Math.cos(a), radius * Math.sin(a), zOffset));
+      for (let i = 0; i < N; i++) {
+        pts.push(getPoint(layer, 4, i)); pts.push(getPoint(layer, 4, i + 1));
       }
     }
     return pts;
@@ -46,8 +44,8 @@ export default function TeslaVortex() {
     groupRef.current.rotation.y = Math.cos(t * 0.2) * 0.15;
 
     // 2. Transición y Pulso Cyberpunk (Preparado para desmontajes futuros)
-    const targetBaseOpacity = 0.7; // Modificar a 0 en el futuro para un "Fade Out"
-    const pulse = 0.2 * Math.sin(t * 2.5); // Latido de neón
+    const targetBaseOpacity = isActive ? 0.7 : 0.0;
+    const pulse = isActive ? 0.2 * Math.sin(t * 2.5) : 0;
     
     lineRef.current.material.opacity = THREE.MathUtils.lerp(
       lineRef.current.material.opacity,
@@ -61,6 +59,7 @@ export default function TeslaVortex() {
       <Line
         ref={lineRef}
         points={mandalaPoints}
+        segments={true} // Pares aislados: sin líneas parásitas entre capas
         color="#00ffcc" // Cian Neón
         lineWidth={1.5}
         transparent

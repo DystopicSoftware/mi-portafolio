@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import TeslaVortex from './components/3d/TeslaVortex'
+import SceneManager from './components/3d/SceneManager'
 import { Hero } from './sections/Hero'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <>
       <div className="fixed inset-0 z-0 pointer-events-none w-full h-full bg-[#050505]">
         <Canvas camera={{ position: [0, 0, 9], fov: 60 }}>
-          <TeslaVortex />
+          <SceneManager />
         </Canvas>
       </div>
 
