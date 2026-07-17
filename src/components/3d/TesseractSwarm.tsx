@@ -113,20 +113,22 @@ function SingleTesseract({ basePos, color, scale, category }: { basePos: THREE.V
   });
 
   return (
-    <group ref={groupRef} scale={scale}>
-      <lineSegments>
-        <bufferGeometry ref={geoRef}>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[positions3D, 3]}
-          />
-          <bufferAttribute
-            attach="index"
-            args={[lineIndices, 1]}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial ref={matRef} color={color} transparent depthWrite={false} toneMapped={false} />
-      </lineSegments>
+    <group ref={groupRef}>
+      <group scale={scale}>
+        <lineSegments>
+          <bufferGeometry ref={geoRef}>
+            <bufferAttribute
+              attach="attributes-position"
+              args={[positions3D, 3]}
+            />
+            <bufferAttribute
+              attach="index"
+              args={[lineIndices, 1]}
+            />
+          </bufferGeometry>
+          <lineBasicMaterial ref={matRef} color={color} transparent depthWrite={false} toneMapped={false} />
+        </lineSegments>
+      </group>
 
       {category && (
         <Html 
