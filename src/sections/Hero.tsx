@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Brain, CircuitBoard, Cpu, GitBranch, User, MessageCircle, MapPin } from 'lucide-react'
 import { usePortfolioStore } from '../store/usePortfolioStore'
 
@@ -90,7 +90,7 @@ export function Hero() {
           className={`flex flex-wrap justify-center gap-4 mt-10 border-t border-white/10 pt-6 ${
             isHidden ? 'pointer-events-none select-none' : 'pointer-events-auto'
           }`}
-          {...(isHidden ? { inert: '' } : {})}
+          inert={isHidden ? true : undefined}
         >
           <a
             href="https://www.linkedin.com/in/juan-villada-sierra/"

@@ -9,7 +9,7 @@ import { usePortfolioStore } from './store/usePortfolioStore'
 import { projectsData } from './data/projects'
 
 function App() {
-  const activeCategory    = usePortfolioStore((state) => state.activeCategory);
+  const activeCategory = usePortfolioStore((state) => state.activeCategory);
   const setActiveCategory = usePortfolioStore((state) => state.setActiveCategory);
 
   const activeProject = activeCategory ? projectsData[activeCategory] : null;
@@ -18,11 +18,7 @@ function App() {
 
   useEffect(() => {
     if (uiContainerRef.current) {
-      if (activeCategory !== null) {
-        uiContainerRef.current.setAttribute('inert', 'true');
-      } else {
-        uiContainerRef.current.removeAttribute('inert');
-      }
+
     }
   }, [activeCategory]);
 
