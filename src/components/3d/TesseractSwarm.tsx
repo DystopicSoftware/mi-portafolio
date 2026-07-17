@@ -30,13 +30,13 @@ const INTERCEPT_COLOR = new THREE.Color('#a0ffff');
 function AnimatedTesseract({ id, baseX, offsetTime = 0 }: { id: string, baseX: number, offsetTime?: number }) {
   const groupRef = useRef<THREE.Group>(null!);
   const innerRef = useRef<THREE.Group>(null!);
-  
+
   const activeCategory = usePortfolioStore((state) => state.activeCategory);
 
   // 1. SOLUCIÓN MAGISTRAL: Creamos el material ANTES del primer render
   // Usamos .clone() para que cada teseracto tenga su propio color de forma independiente
   const tesseractMaterial = useMemo(() => new THREE.LineBasicMaterial({
-    color: PRIMARY_COLOR.clone(), 
+    color: PRIMARY_COLOR.clone(),
     opacity: 0.5,
     transparent: true,
     depthWrite: false,
@@ -47,7 +47,7 @@ function AnimatedTesseract({ id, baseX, offsetTime = 0 }: { id: string, baseX: n
   useFrame((state, delta) => {
     if (!groupRef.current || !innerRef.current) return;
     const time = state.clock.getElapsedTime() + offsetTime;
-    
+
     // Identificar si este teseracto es el que el usuario seleccionó
     const isActive = activeCategory === id;
 
@@ -77,10 +77,10 @@ function AnimatedTesseract({ id, baseX, offsetTime = 0 }: { id: string, baseX: n
   return (
     // Escala grande impuesta para que ocupen buena parte de la pantalla (scale=2)
     <group ref={groupRef} position={[baseX, 0, -5]} scale={2}>
-      
+
       {/* Cubo Exterior (Escala relativa 1) */}
       <lineSegments geometry={boxGeo} material={tesseractMaterial} />
-      
+
       {/* Cubo Interior (Escala relativa 0.5 para la proyección 4D) */}
       <group ref={innerRef} scale={0.5}>
         <lineSegments geometry={boxGeo} material={tesseractMaterial} />

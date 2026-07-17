@@ -5,6 +5,7 @@ import AmbientDust from './components/3d/AmbientDust'
 import TesseractSwarm from './components/3d/TesseractSwarm'
 import { Hero } from './sections/Hero'
 import ProjectHologram from './components/ui/ProjectHologram'
+import { AiTerminal } from './components/ui/AiTerminal'
 import { usePortfolioStore } from './store/usePortfolioStore'
 import { projectsData } from './data/projects'
 
@@ -72,6 +73,9 @@ function App() {
           onClose={() => setActiveCategory(null)}
         />
       )}
+
+      {/* ── Terminal IA Flotante ── */}
+      <AiTerminal />
     </>
   )
 }
