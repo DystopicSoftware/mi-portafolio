@@ -14,9 +14,9 @@ export default function TeslaVortex() {
     const layers = 8; // Capas concéntricas para alta densidad
 
     for (let layer = 0; layer < layers; layer++) {
-      const radius = 4.5 - layer * 0.45; 
+      const radius = 4.5 - layer * 0.45;
       const zOffset = layer * -0.15; // Ligera profundidad 3D
-      
+
       // 1. Trazado del Eneágono (salto de 1)
       for (let i = 0; i <= N; i++) {
         const a = (i * 2 * Math.PI) / N;
@@ -48,7 +48,7 @@ export default function TeslaVortex() {
     // 2. Transición y Pulso Cyberpunk (Preparado para desmontajes futuros)
     const targetBaseOpacity = 0.7; // Modificar a 0 en el futuro para un "Fade Out"
     const pulse = 0.2 * Math.sin(t * 2.5); // Latido de neón
-    
+
     lineRef.current.material.opacity = THREE.MathUtils.lerp(
       lineRef.current.material.opacity,
       targetBaseOpacity + pulse,
