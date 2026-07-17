@@ -5,11 +5,15 @@ import os
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-# Inicializa el cliente. Groq buscará automáticamente la variable de entorno GROQ_API_KEY
-client = Groq()
-
 class ChatRequest(BaseModel):
     message: str
+
+def get_groq_client():
+    # Lazy loading: Garantiza que Vercel haya inyectado las variables en runtime
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("Critical Error: GROQ_API_KEY no detectada en el entorno de Vercel.")
+    return Groq(api_key=api_key)
 
 @app.get("/api/health")
 def health_check():
@@ -18,6 +22,9 @@ def health_check():
 @app.post("/api/chat")
 def chat_with_agent(request: ChatRequest):
     try:
+        # Instanciamos el cliente solo cuando entra la petición real
+        client = get_groq_client()
+        
         chat_completion = client.chat.completions.create(
             messages=[
                 {
