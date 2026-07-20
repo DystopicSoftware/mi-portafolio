@@ -22,8 +22,8 @@ export function AiTerminal() {
     }
   }, [messages]);
 
-  const sendMessage = async (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const sendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();

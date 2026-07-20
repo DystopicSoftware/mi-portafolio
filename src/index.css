@@ -1,16 +1,6 @@
 @import "tailwindcss";
 
-@theme {
-  --color-obsidian: #09090b;
-  --color-cyan-tech: #22d3ee;
-  --color-terminal: #00ff41;
-}
-
 body {
-  @apply bg-obsidian text-slate-300 antialiased;
-  margin: 0;
-}
-
-#root {
-  min-height: 100svh;
+  background-color: #03070a; /* Fondo oscuro por defecto */
+  color: #e2e1f2;
 }

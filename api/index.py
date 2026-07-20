@@ -9,11 +9,18 @@ class ChatRequest(BaseModel):
     message: str
 
 def get_groq_client():
-    # Lazy loading: Garantiza que Vercel haya inyectado las variables en runtime
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
-        raise ValueError("Critical Error: GROQ_API_KEY no detectada en el entorno de Vercel.")
+        raise ValueError("Critical Error: GROQ_API_KEY no detectada en el entorno.")
     return Groq(api_key=api_key)
+
+# Leer el archivo de texto una sola vez al arrancar para ahorrar recursos
+# Usamos os.path para que Vercel encuentre la ruta correcta en producción
+current_dir = os.path.dirname(os.path.realpath(__file__))
+rules_path = os.path.join(current_dir, "reglas_ventas.txt")
+
+with open(rules_path, "r", encoding="utf-8") as file:
+    SYSTEM_PROMPT = file.read()
 
 @app.get("/api/health")
 def health_check():
@@ -22,21 +29,20 @@ def health_check():
 @app.post("/api/chat")
 def chat_with_agent(request: ChatRequest):
     try:
-        # Instanciamos el cliente solo cuando entra la petición real
         client = get_groq_client()
         
         chat_completion = client.chat.completions.create(
             messages=[
                 {
                     "role": "system",
-                    "content": "Eres la IA asistente de Juan Villada, Ingeniero Electrónico y Desarrollador Fullstack. Responde preguntas sobre su portafolio de forma concisa, técnica y futurista. Tus respuestas deben ser cortas."
+                    "content": SYSTEM_PROMPT # <--- Aquí inyectamos el archivo de texto
                 },
                 {
                     "role": "user",
                     "content": request.message,
                 }
             ],
-            model="llama3-8b-8192",
+            model="llama-3.3-70b-versatile",
             temperature=0.7,
             max_tokens=300,
         )
