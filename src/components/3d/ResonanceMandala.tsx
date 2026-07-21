@@ -7,8 +7,6 @@ import { usePortfolioStore } from '../../store/usePortfolioStore';
 export default function ResonanceMandala() {
   const groupRef = useRef<THREE.Group>(null!);
   const lineRefs = useRef<any[]>([]);
-  const activeCategory = usePortfolioStore((s) => s.activeCategory);
-
   // Caché de Geometría: 12 Elipses rotadas formando un mandala 3D
   const curves = useMemo(() => {
     const arr = [];
@@ -24,6 +22,9 @@ export default function ResonanceMandala() {
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime;
+    
+    // Leer del store sin disparar re-render
+    const activeCategory = usePortfolioStore.getState().activeCategory;
     const isActive = activeCategory !== null;
 
     // Rotación suave del mandala completo

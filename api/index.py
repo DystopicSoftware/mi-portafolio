@@ -5,22 +5,24 @@ import os
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-class ChatRequest(BaseModel):
-    message: str
+# 1. INICIALIZACIÓN GLOBAL (Cold Start Optimization)
+# Vercel mantendrá esta instancia viva en memoria entre peticiones (Warm Starts).
+api_key = os.environ.get("GROQ_API_KEY")
+groq_client = Groq(api_key=api_key) if api_key else None
 
-def get_groq_client():
-    api_key = os.environ.get("GROQ_API_KEY")
-    if not api_key:
-        raise ValueError("Critical Error: GROQ_API_KEY no detectada en el entorno.")
-    return Groq(api_key=api_key)
-
-# Leer el archivo de texto una sola vez al arrancar para ahorrar recursos
-# Usamos os.path para que Vercel encuentre la ruta correcta en producción
+# 2. CACHÉ DEL PROMPT DEL SISTEMA
+# Esto ya lo estabas haciendo bien, lo mantenemos global.
 current_dir = os.path.dirname(os.path.realpath(__file__))
 rules_path = os.path.join(current_dir, "reglas_ventas.txt")
+try:
+    with open(rules_path, "r", encoding="utf-8") as file:
+        SYSTEM_PROMPT = file.read()
+except FileNotFoundError:
+    SYSTEM_PROMPT = "You are a helpful assistant."
+    print("WARNING: reglas_ventas.txt no encontrado.")
 
-with open(rules_path, "r", encoding="utf-8") as file:
-    SYSTEM_PROMPT = file.read()
+class ChatRequest(BaseModel):
+    message: str
 
 @app.get("/api/health")
 def health_check():
@@ -28,14 +30,16 @@ def health_check():
 
 @app.post("/api/chat")
 def chat_with_agent(request: ChatRequest):
+    # 3. VERIFICACIÓN LIGERA EN TIEMPO DE EJECUCIÓN
+    if not groq_client:
+        raise HTTPException(status_code=500, detail="GROQ_API_KEY no detectada en el entorno Serverless.")
+    
     try:
-        client = get_groq_client()
-        
-        chat_completion = client.chat.completions.create(
+        chat_completion = groq_client.chat.completions.create(
             messages=[
                 {
                     "role": "system",
-                    "content": SYSTEM_PROMPT # <--- Aquí inyectamos el archivo de texto
+                    "content": SYSTEM_PROMPT
                 },
                 {
                     "role": "user",

@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { usePortfolioStore } from '../../store/usePortfolioStore';
@@ -31,8 +31,6 @@ function AnimatedTesseract({ id, baseX, offsetTime = 0 }: { id: string, baseX: n
   const groupRef = useRef<THREE.Group>(null!);
   const innerRef = useRef<THREE.Group>(null!);
 
-  const activeCategory = usePortfolioStore((state) => state.activeCategory);
-
   // 1. SOLUCIÓN MAGISTRAL: Creamos el material ANTES del primer render
   // Usamos .clone() para que cada teseracto tenga su propio color de forma independiente
   const tesseractMaterial = useMemo(() => new THREE.LineBasicMaterial({
@@ -44,11 +42,20 @@ function AnimatedTesseract({ id, baseX, offsetTime = 0 }: { id: string, baseX: n
     linewidth: 1
   }), []);
 
+  // 🛡️ NUEVO: GARBAGE COLLECTOR MANUAL PARA LA GPU
+  useEffect(() => {
+    // La función de retorno se ejecuta cuando el componente se desmonta
+    return () => {
+      tesseractMaterial.dispose();
+    };
+  }, [tesseractMaterial]);
+
   useFrame((state, delta) => {
     if (!groupRef.current || !innerRef.current) return;
     const time = state.clock.getElapsedTime() + offsetTime;
 
-    // Identificar si este teseracto es el que el usuario seleccionó
+    // Identificar si este teseracto es el que el usuario seleccionó leyendo el store directamente (sin re-renders)
+    const activeCategory = usePortfolioStore.getState().activeCategory;
     const isActive = activeCategory === id;
 
     // ── Lógica de Animación Espacial ──

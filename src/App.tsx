@@ -1,28 +1,13 @@
-import { Suspense, useEffect, useRef } from 'react'
+import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import AmbientDust from './components/3d/AmbientDust'
 import TesseractSwarm from './components/3d/TesseractSwarm'
-import { Hero } from './sections/Hero'
-import ProjectHologram from './components/ui/ProjectHologram'
-import { AiTerminal } from './components/ui/AiTerminal'
-import { usePortfolioStore } from './store/usePortfolioStore'
-import { projectsData } from './data/projects'
+import OverlayUI from './components/ui/OverlayUI'
 
 function App() {
-  const activeCategory = usePortfolioStore((state) => state.activeCategory);
-  const setActiveCategory = usePortfolioStore((state) => state.setActiveCategory);
-
-  const activeProject = activeCategory ? projectsData[activeCategory] : null;
-
-  const uiContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (uiContainerRef.current) {
-
-    }
-  }, [activeCategory]);
-
+  // ❌ Cero suscripciones a Zustand aquí. Este componente se renderiza UNA vez.
+  
   return (
     <>
       {/* ── Capa 0: Canvas 3D (fondo, pointer-events bloqueados al nivel del div) ── */}
@@ -51,31 +36,8 @@ function App() {
         </Canvas>
       </div>
 
-      {/* ── Capa 1: Hero / UI 2D ── */}
-      {/* inert bloquea el 100% de la interacción cuando el modal está abierto (via useEffect) */}
-      <div
-        ref={uiContainerRef}
-        className="relative z-10 flex flex-col min-h-screen text-slate-300"
-      >
-        <Hero />
-      </div>
-
-      {/* ── Capa 2: Modal 2D de proyecto — z-[9999], completamente sobre todo ── */}
-      {/* AnimatePresence permitiría exit animation si se envuelve aquí en el futuro */}
-      {activeProject && (
-        <ProjectHologram
-          title={activeProject.title}
-          description={activeProject.description}
-          techStack={activeProject.techStack}
-          githubUrl={activeProject.githubUrl}
-          liveUrl={activeProject.liveUrl}
-          telemetry={activeProject.telemetry}
-          onClose={() => setActiveCategory(null)}
-        />
-      )}
-
-      {/* ── Terminal IA Flotante ── */}
-      <AiTerminal />
+      {/* ── Capa 1: UI 2D Reactiva ── */}
+      <OverlayUI />
     </>
   )
 }
