@@ -32,10 +32,15 @@ export function AiTerminal() {
     setIsLoading(true);
 
     try {
+      const historyToSend = [...messages, { role: 'user' as const, content: userMessage }].map(m => ({
+        role: m.role,
+        content: m.content
+      }));
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({ messages: historyToSend })
       });
       
       const data = await res.json();

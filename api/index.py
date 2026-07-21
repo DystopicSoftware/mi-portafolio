@@ -5,10 +5,16 @@ import os
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-# 1. INICIALIZACIÓN GLOBAL (Cold Start Optimization)
-# Vercel mantendrá esta instancia viva en memoria entre peticiones (Warm Starts).
-api_key = os.environ.get("GROQ_API_KEY")
-groq_client = Groq(api_key=api_key) if api_key else None
+client_instance = None
+
+def get_groq_client():
+    global client_instance
+    if client_instance is None:
+        api_key = os.environ.get("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("Critical Error: GROQ_API_KEY no detectada.")
+        client_instance = Groq(api_key=api_key)
+    return client_instance
 
 # 2. CACHÉ DEL PROMPT DEL SISTEMA
 # Esto ya lo estabas haciendo bien, lo mantenemos global.
@@ -21,8 +27,14 @@ except FileNotFoundError:
     SYSTEM_PROMPT = "You are a helpful assistant."
     print("WARNING: reglas_ventas.txt no encontrado.")
 
+from typing import List
+
+class MessageItem(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
-    message: str
+    messages: List[MessageItem]
 
 @app.get("/api/health")
 def health_check():
@@ -31,21 +43,19 @@ def health_check():
 @app.post("/api/chat")
 def chat_with_agent(request: ChatRequest):
     # 3. VERIFICACIÓN LIGERA EN TIEMPO DE EJECUCIÓN
-    if not groq_client:
-        raise HTTPException(status_code=500, detail="GROQ_API_KEY no detectada en el entorno Serverless.")
+    client = get_groq_client()
     
     try:
-        chat_completion = groq_client.chat.completions.create(
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": request.message,
-                }
-            ],
+        formatted_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        
+        # Tomamos solo los últimos 6 mensajes para mantener el contexto rápido
+        for msg in request.messages[-6:]:
+            # Asegurar que el rol sea válido para la API de Groq
+            role = "assistant" if msg.role == "assistant" else "user"
+            formatted_messages.append({"role": role, "content": msg.content})
+
+        chat_completion = client.chat.completions.create(
+            messages=formatted_messages,
             model="llama-3.3-70b-versatile",
             temperature=0.7,
             max_tokens=300,
