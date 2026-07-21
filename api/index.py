@@ -5,16 +5,23 @@ import os
 
 app = FastAPI(docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-client_instance = None
+import sys
 
-def get_groq_client():
-    global client_instance
-    if client_instance is None:
-        api_key = os.environ.get("GROQ_API_KEY")
-        if not api_key:
-            raise ValueError("Critical Error: GROQ_API_KEY no detectada.")
+# 1. CLIENTE GLOBAL DE GROQ (Optimización de Warm Starts)
+# Instanciamos el cliente fuera del endpoint para que las Serverless Functions 
+# lo mantengan en memoria entre peticiones.
+api_key = os.environ.get("GROQ_API_KEY")
+
+if not api_key:
+    # Manejo de error global para que no falle silenciosamente ni rompa el build de forma confusa
+    print("WARNING: GROQ_API_KEY no detectada en el entorno. La IA no funcionará.", file=sys.stderr)
+    client_instance = None
+else:
+    try:
         client_instance = Groq(api_key=api_key)
-    return client_instance
+    except Exception as e:
+        print(f"ERROR: Fallo al inicializar Groq: {e}", file=sys.stderr)
+        client_instance = None
 
 # 2. CACHÉ DEL PROMPT DEL SISTEMA
 # Esto ya lo estabas haciendo bien, lo mantenemos global.
@@ -43,7 +50,8 @@ def health_check():
 @app.post("/api/chat")
 def chat_with_agent(request: ChatRequest):
     # 3. VERIFICACIÓN LIGERA EN TIEMPO DE EJECUCIÓN
-    client = get_groq_client()
+    if not client_instance:
+        raise HTTPException(status_code=500, detail="El cliente de IA no está configurado (falta GROQ_API_KEY).")
     
     try:
         formatted_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -54,7 +62,7 @@ def chat_with_agent(request: ChatRequest):
             role = "assistant" if msg.role == "assistant" else "user"
             formatted_messages.append({"role": role, "content": msg.content})
 
-        chat_completion = client.chat.completions.create(
+        chat_completion = client_instance.chat.completions.create(
             messages=formatted_messages,
             model="llama-3.3-70b-versatile",
             temperature=0.7,

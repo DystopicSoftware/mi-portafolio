@@ -12,8 +12,9 @@ export interface ProjectHologramProps {
   techStack: TechItem[];
   githubUrl: string;
   liveUrl: string | null;
+  videoSrc?: string; // <-- Propiedad opcional añadida
   telemetry: TelemetryMetric[];
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 // ── Marca de calibración en esquina ──────────────────────────────────────────
@@ -65,6 +66,7 @@ export default function ProjectHologram({
   techStack,
   githubUrl,
   liveUrl,
+  videoSrc,
   telemetry,
   onClose,
 }: ProjectHologramProps) {
@@ -148,28 +150,37 @@ export default function ProjectHologram({
         {/* ── BODY ───────────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-8 flex-1 min-h-0 px-10 py-7">
 
-          {/* Panel izquierdo — video feed placeholder */}
-          <div className="relative w-full h-full bg-black/50 border border-cyan-500/10 rounded-xl flex items-center justify-center overflow-hidden group">
-            <div
-              className="absolute inset-0 opacity-[0.05]"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(0,229,255,1) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(0,229,255,1) 1px, transparent 1px)
-                `,
-                backgroundSize: '28px 28px',
-              }}
-            />
-            <div className="relative flex items-center justify-center w-10 h-10">
-              <div className="absolute w-full h-px bg-cyan-500/25" />
-              <div className="absolute h-full w-px bg-cyan-500/25" />
-              <div className="w-2 h-2 border border-cyan-500/40 rotate-45" />
-            </div>
-            <span className="absolute bottom-3 left-0 right-0 text-center font-mono text-cyan-500/25 text-[9px] tracking-widest uppercase">
-              VIDEO_FEED :: STANDBY
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
+          {/* Columna Izquierda: Reproductor Holográfico o Standby */}
+        <div className="relative w-full h-full min-h-[180px] bg-[#020508]/80 border border-cyan-500/20 rounded-xl overflow-hidden flex items-center justify-center group shadow-inner">
+          {videoSrc ? (
+            <>
+              {/* playsInline y muted son críticos para que el Autoplay funcione en todos los navegadores sin bloquear la UI */}
+              <video 
+                src={videoSrc} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-screen group-hover:opacity-100 transition-opacity duration-500"
+              />
+              {/* Filtro Scanline Holográfico para integrar el video al estilo Cyberpunk */}
+              <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,255,204,0.05)_1px,transparent_1px)] bg-[size:100%_4px] z-10 mix-blend-overlay shadow-[inset_0_0_30px_rgba(0,0,0,0.9)]" />
+            </>
+          ) : (
+            <>
+              {/* Diseño Fallback (STANDBY) si no hay video */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,204,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,204,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-10 h-10 border border-cyan-500/30 rounded-full flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-cyan-500/50" />
+                </div>
+              </div>
+              <span className="font-mono text-[10px] text-cyan-500/50 tracking-widest uppercase relative z-10 bg-[#020508] px-3 py-1 border border-cyan-500/20">
+                VIDEO_FEED :: STANDBY
+              </span>
+            </>
+          )}
+        </div>
 
           {/* Panel derecho — descripción y stack interactivo */}
           <div className="flex flex-col gap-6 overflow-y-auto pr-1">

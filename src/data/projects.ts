@@ -17,6 +17,7 @@ export interface ProjectData {
   techStack: TechItem[];
   githubUrl: string;
   liveUrl: string | null;
+  videoSrc?: string;
   telemetry: TelemetryMetric[];
 }
 
@@ -36,6 +37,7 @@ export const projectsData: Record<string, ProjectData> = {
     ],
     githubUrl: 'https://github.com/DystopicSoftware/antioquia-zana-mis-pruebas',
     liveUrl:   'https://antioquia-zana-ur48.vercel.app/',
+    videoSrc:  '/assets/projects/zana-preview.mp4',
     telemetry: [
       { label: 'RENDER',  value: 'GPU'   },
       { label: 'FPS',     value: '60'    },
@@ -65,22 +67,24 @@ export const projectsData: Record<string, ProjectData> = {
   },
 
   'edge-ai': {
-    title: 'Restaurante IA',
-    description:
-      'Sistema de asistencia autónoma local. NLP y visión artificial en el Edge para automatización completa de la toma de pedidos sin conectividad a la nube.',
+    title: 'RestauranteIA / Local Agents',
+    description: 'Sistema multi-agente 100% offline para la automatización y control de inventario de un restaurante. Impulsado por modelos locales (Llama 3.1 vía Ollama) integrados en una interfaz de Streamlit y bases de datos relacionales SQLite.\n\nEl núcleo arquitectónico destaca por la implementación de Tool Calling nativo con tipado estricto mediante Pydantic. Esto supera las limitaciones de parsing de strings crudos y elimina las alucinaciones dentro del bucle de ejecución del AgentExecutor.',
     techStack: [
       { name: 'Python',    detail: 'Backend principal. Orquestación del pipeline de inferencia, visión y lógica de negocio.' },
-      { name: 'LangChain', detail: 'Framework de composición de LLMs. Gestión de contexto conversacional y cadenas de razonamiento.' },
-      { name: 'FastAPI',   detail: 'API REST asíncrona de ultra-bajo overhead para comunicación con el front de punto de venta.' },
-      { name: 'Edge TPU',  detail: 'Google Coral Dev Board. Inferencia de modelos TFLite cuantizados a INT8 sin GPU en la nube.' },
+      { name: 'Ollama',    detail: 'Framework local para la ejecución de LLMs sin necesidad de conexión a internet o APIs externas.' },
+      { name: 'Llama 3.1', detail: 'Modelo principal configurado para tareas de Tool Calling y parseo JSON nativo.' },
+      { name: 'LangChain', detail: 'Framework de composición de agentes. Uso de create_tool_calling_agent y StructuredTool.' },
+      { name: 'SQLite',    detail: 'Persistencia de datos. Bases relacionales para Inventario, Ventas y Recetas.' },
+      { name: 'Streamlit', detail: 'Frontend reactivo para el POS y dashboard administrativo.' },
     ],
-    githubUrl: 'https://github.com/DystopicSoftware/restaurante-ia',
-    liveUrl:   null,
+    githubUrl: 'https://github.com/DystopicSoftware/RestauranteIA',
+    liveUrl: null,
+    videoSrc: '/assets/projects/restaurante-preview.mp4',
     telemetry: [
-      { label: 'MODEL',    value: 'Llama 3' },
-      { label: 'ACCURACY', value: '98%'     },
-      { label: 'INFER',    value: '38ms'    },
-      { label: 'BACKEND',  value: 'LOCAL'   },
+      { label: 'MODEL',    value: 'Llama 3.1' },
+      { label: 'ACCURACY', value: '100%'      },
+      { label: 'LATENCY',  value: '<800ms'    },
+      { label: 'BACKEND',  value: 'OFFLINE'   },
     ],
   },
 };

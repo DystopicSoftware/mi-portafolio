@@ -39,6 +39,7 @@ export default function OverlayUI() {
           techStack={activeProject.techStack}
           githubUrl={activeProject.githubUrl}
           liveUrl={activeProject.liveUrl}
+          videoSrc={activeProject.videoSrc}
           telemetry={activeProject.telemetry}
           onClose={() => setActiveCategory(null)}
         />
