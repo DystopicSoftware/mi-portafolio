@@ -62,14 +62,14 @@ const createFaustNode = async (audioContext, dspName = "template", voices = 0, s
     const FAUST_DSP_HAS_EFFECT = false;
 
     // Import necessary Faust modules and data
-    const { FaustMonoDspGenerator, FaustPolyDspGenerator } = await import("./faustwasm/index.js");
+    const { FaustMonoDspGenerator, FaustPolyDspGenerator } = await import("/assets/audio/faustwasm/index.js");
 
     // Load DSP metadata from JSON
     /** @type {FaustDspMeta} */
-    const dspMeta = await (await fetch("./dsp-meta.json")).json();
+    const dspMeta = await (await fetch("/assets/audio/dsp-meta.json")).json();
 
     // Compile the DSP module from WebAssembly binary data
-    const dspModule = await compileWasmModule("./dsp-module.wasm");
+    const dspModule = await compileWasmModule("/assets/audio/dsp-module.wasm");
 
     // Create an object representing Faust DSP with metadata and module
     /** @type {FaustDspDistribution} */
@@ -82,11 +82,11 @@ const createFaustNode = async (audioContext, dspName = "template", voices = 0, s
     if (voices > 0) {
 
         // Try to load optional mixer and effect modules
-        faustDsp.mixerModule = await compileWasmModule("./mixer-module.wasm");
+        faustDsp.mixerModule = await compileWasmModule("/assets/audio/mixer-module.wasm");
 
         if (FAUST_DSP_HAS_EFFECT) {
-            faustDsp.effectMeta = await (await fetch("./effect-meta.json")).json();
-            faustDsp.effectModule = await compileWasmModule("./effect-module.wasm");
+            faustDsp.effectMeta = await (await fetch("/assets/audio/effect-meta.json")).json();
+            faustDsp.effectModule = await compileWasmModule("/assets/audio/effect-module.wasm");
         }
 
         // Keep both backends behind the same closure so fallback recreates the
@@ -170,7 +170,7 @@ async function connectToAudioInput(audioContext, id, faustNode, oldInputStreamNo
  * @param {FaustAudioWorkletNode} faustNode 
  */
 async function createFaustUI(divFaustUI, faustNode) {
-    const { FaustUI } = await import("./faust-ui/index.js");
+    const { FaustUI } = await import("/assets/audio/faust-ui/index.js");
     const $container = document.createElement("div");
     $container.style.margin = "0";
     $container.style.position = "absolute";
