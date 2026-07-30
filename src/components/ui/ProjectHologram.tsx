@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, GitBranch, X } from 'lucide-react';
 import type { TechItem, TelemetryMetric } from '../../data/projects';
+import { InteractiveSequencer } from './InteractiveSequencer';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props
@@ -152,7 +153,9 @@ export default function ProjectHologram({
 
           {/* Columna Izquierda: Reproductor Holográfico o Standby */}
         <div className="relative w-full h-full min-h-[180px] bg-[#020508]/80 border border-cyan-500/20 rounded-xl overflow-hidden flex items-center justify-center group shadow-inner">
-          {videoSrc ? (
+          {title === 'DSP Bass Synth' ? (
+            <InteractiveSequencer onClose={onClose} />
+          ) : videoSrc ? (
             <>
               {/* playsInline y muted son críticos para que el Autoplay funcione en todos los navegadores sin bloquear la UI */}
               <video 

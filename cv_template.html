@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Juan Villada CV</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            color: #111827;
+            line-height: 1.5;
+            font-size: 11px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0f172a;
+        }
+
+        .contact-info {
+            font-size: 10px;
+            color: #475569;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 4px;
+            margin-top: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-content {
+            margin-bottom: 12px;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 12px;
+            color: #1e293b;
+        }
+
+        .subtitle {
+            font-weight: 500;
+            font-size: 11px;
+            color: #475569;
+            font-style: italic;
+        }
+
+        .date {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        ul {
+            margin-top: 4px;
+            margin-bottom: 12px;
+            padding-left: 16px;
+        }
+
+        li {
+            margin-bottom: 3px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .skill-category {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .skill-list {
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin-bottom: 15px;">
+        <h1>Juan Esteban Villada Sierra</h1>
+        <div class="contact-info" style="justify-content: center;">
+            <span>+57 333 241 3337</span> | 
+            <span>jvilladas@unal.edu.co</span> | 
+            <span>linkedin.com/in/juan-villada-sierra</span> | 
+            <span>github.com/DystopicSoftware</span>
+        </div>
+    </div>
+
+    <h2>Professional Summary</h2>
+    <div class="section-content">
+        <p style="margin:0; text-align: justify;">Electronic Engineering student (UNAL) profiling as an <span class="highlight">Edge AI & Audio Fullstack Engineer</span>. Solid experience in hardware-software integration, with a portfolio spanning hardware descriptions in FPGAs (Verilog) and RTOS/Linux architectures, to the development of immersive, high-performance web interfaces (React 19, WebGL/Three.js) and the orchestration of LLM agents (Serverless and Offline). Specialist in designing robust, low-latency architectures to solve complex problems at the edge.</p>
+    </div>
+
+    <h2>Education</h2>
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Universidad Nacional de Colombia (UNAL)</span>
+            <span class="date">Manizales, Colombia</span>
+        </div>
+        <div class="flex-between" style="margin-bottom: 4px;">
+            <span class="subtitle">B.Sc. Electronic Engineering</span>
+            <span class="date">Expected Graduation: Dec 2026</span>
+        </div>
+        <ul style="margin-bottom: 0;">
+            <li><span class="highlight">Relevant Coursework:</span> Real-Time Systems, Dynamic Systems and Control, Digital Signal Processing (DSP), Artificial Intelligence, Embedded Systems.</li>
+            <li><span class="highlight">Activities:</span> Active member of the AI and Audio Synthesis Research Groups (UNAL).</li>
+        </ul>
+    </div>
+
+    <h2>Work Experience</h2>
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Software & AI Developer</span>
+            <span class="date">Jan 2025 – Present</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">AI Research Group, Universidad Nacional de Colombia — Manizales, Colombia</div>
+        <ul>
+            <li>Led the development of a vehicle license plate classification system using computer vision (Python/ML), achieving <span class="highlight">95% inference accuracy</span>.</li>
+            <li>Integrated SQL databases for the efficient management and monitoring of detected records.</li>
+            <li>The project was successfully <span class="highlight">scaled and implemented by the Colombian National Police</span> for urban surveillance systems.</li>
+        </ul>
+    </div>
+
+    <h2>Technical Projects</h2>
+    
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Hardware DSP Bass Synthesizer (FPGA)</span>
+            <span class="date">2026</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Verilog, Gowin Tang Nano 20K, Faust, I2S</div>
+        <ul>
+            <li>Designed and implemented a digital bass synthesizer using physical modeling (Karplus-Strong) completely in hardware.</li>
+            <li>Prototyped the algorithm in Faust DSP and manually translated the mathematics to Q15 fixed-point arithmetic in pure Verilog, achieving <span class="highlight">2.1ms latency on a 27MHz clock</span> with no OS overhead and direct 24-bit I²S DAC output.</li>
+            <li>Implemented advanced <span class="highlight">anti-overflow and limit-cycle mitigation techniques</span> for low-pass filters and soft-clipping saturators.</li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Linux Embedded / Lock-free C++ Audio Engine</span>
+            <span class="date">2025</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">C++, ALSA, FluidSynth, ESP32, FreeRTOS, Raspberry Pi Zero 2W</div>
+        <ul>
+            <li>Engineered a hybrid asymmetric hardware synthesizer: an ESP32 (FreeRTOS) scanning a custom key matrix and a Raspberry Pi running a custom C++ audio engine.</li>
+            <li>Developed <span class="highlight">lock-free queues in C++</span> to achieve deterministic, real-time communication between the MIDI parsing thread and the ALSA audio callback, minimizing jitter.</li>
+            <li>Optimized FluidSynth compilation on embedded Linux for headless polyphonic synthesis.</li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">High-Performance WebGL & Serverless AI (Antioquia Zana 3D)</span>
+            <span class="date">2026</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">React 19, Three.js, FastAPI, Vercel</div>
+        <ul>
+            <li>Developed interactive 3D SPAs integrating advanced graphics with React Three Fiber, GLSL shaders, and glassmorphism.</li>
+            <li>Optimized the GPU's garbage collection and lazy loading to maintain a <span class="highlight">rock-solid 60 FPS</span> without memory leaks.</li>
+            <li>Deployed a serverless Python backend (FastAPI) on Vercel to orchestrate AI agents (Llama 3.3 70B via Groq API), implementing warm starts for ultra-low latencies (&lt;800ms).</li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Offline Edge AI Multi-Agent System (RestauranteIA)</span>
+            <span class="date">2025</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Python, LangChain, Ollama, Llama 3.1, NVIDIA Jetson</div>
+        <ul>
+            <li>Developed a 100% offline multi-agent system using local models via Ollama.</li>
+            <li>Implemented <span class="highlight">native Tool Calling with strict Pydantic typing</span> and SQLite to eliminate hallucinations within the AgentExecutor loop.</li>
+            <li>Deployed facial recognition computer vision models directly on NVIDIA Jetson platforms, enabling immediate hardware inference without cloud dependency.</li>
+        </ul>
+    </div>
+
+    <h2>Technical Skills</h2>
+    <div class="section-content">
+        <div class="skills-grid">
+            <div class="skill-category">Languages:</div>
+            <div class="skill-list">C/C++, Embedded C, Verilog, Python, TypeScript/JavaScript, Assembly, SQL.</div>
+            
+            <div class="skill-category">Frontend & WebGL:</div>
+            <div class="skill-list">React 19, Three.js (React Three Fiber / Drei), Tailwind CSS v4, Zustand, Vite.</div>
+            
+            <div class="skill-category">Backend & AI:</div>
+            <div class="skill-list">FastAPI, Vercel Serverless, Pydantic, Groq API, LangChain, Ollama (Llama 3), PyTorch.</div>
+            
+            <div class="skill-category">Embedded Systems:</div>
+            <div class="skill-list">RTOS (FreeRTOS), Embedded Linux (POSIX, Systemd), DSP (Fixed-Point), OTA, I2S.</div>
+            
+            <div class="skill-category">Hardware:</div>
+            <div class="skill-list">FPGAs (Gowin), ESP32, Raspberry Pi, NVIDIA Jetson, PCB Design (Altium).</div>
+            
+            <div class="skill-category">Software & Tools:</div>
+            <div class="skill-list">Git/GitHub, Docker, Linux (Bash), JUCE Framework, Ableton Live.</div>
+        </div>
+    </div>
+
+    <h2>Certifications & Languages</h2>
+    <div class="section-content">
+        <div class="skills-grid">
+            <div class="skill-category">Certification:</div>
+            <div class="skill-list">Deep Learning Specialization - Coursera / DeepLearning.AI</div>
+            
+            <div class="skill-category">Languages:</div>
+            <div class="skill-list">Spanish (Native), English (Advanced - B2 Level) - Fluent technical and conversational competence.</div>
+        </div>
+    </div>
+
+</body>
+</html>

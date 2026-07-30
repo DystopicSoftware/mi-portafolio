@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@grame/faustwasm": "^0.16.6",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/vite": "^4.3.3",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.24.0",
+    "puppeteer": "^25.4.0",
     "r3f-perf": "^7.2.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

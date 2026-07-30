@@ -1,0 +1,582 @@
+{
+    "name": "bass",
+    "filename": "bass",
+    "version": "2.86.2",
+    "compile_options": "-lang wasm-i -fpga-mem-th 4 -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -single -ftz 2",
+    "library_list": [
+        "/usr/share/faust/stdfaust.lib",
+        "/usr/share/faust/noises.lib",
+        "/usr/share/faust/filters.lib",
+        "/usr/share/faust/maths.lib",
+        "/usr/share/faust/platform.lib",
+        "/usr/share/faust/envelopes.lib",
+        "/usr/share/faust/basics.lib",
+        "/usr/share/faust/delays.lib"
+    ],
+    "include_pathnames": [
+        "/faust/user/inc0",
+        "/share/faust",
+        "/usr/local/share/faust",
+        "/usr/share/faust",
+        "."
+    ],
+    "size": 65792,
+    "code": "eDb/",
+    "inputs": 0,
+    "outputs": 2,
+    "meta": [
+        {
+            "basics.lib/name": "Faust Basic Element Library"
+        },
+        {
+            "basics.lib/sAndH:author": "Romain Michon"
+        },
+        {
+            "basics.lib/version": "1.23.0"
+        },
+        {
+            "compile_options": "-lang wasm-i -fpga-mem-th 4 -ct 1 -es 1 -mcd 16 -mdd 1024 -mdy 33 -single -ftz 2"
+        },
+        {
+            "delays.lib/name": "Faust Delay Library"
+        },
+        {
+            "delays.lib/version": "1.2.0"
+        },
+        {
+            "envelopes.lib/ar:author": "Yann Orlarey, Stéphane Letz"
+        },
+        {
+            "envelopes.lib/author": "GRAME"
+        },
+        {
+            "envelopes.lib/copyright": "GRAME"
+        },
+        {
+            "envelopes.lib/license": "LGPL with exception"
+        },
+        {
+            "envelopes.lib/name": "Faust Envelope Library"
+        },
+        {
+            "envelopes.lib/version": "1.3.0"
+        },
+        {
+            "filename": "bass"
+        },
+        {
+            "filters.lib/dcblocker:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/dcblocker:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/dcblocker:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/lowpass0_highpass1": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/lowpass0_highpass1:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/lowpass:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/lowpass:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/lowpass:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/name": "Faust Filters Library"
+        },
+        {
+            "filters.lib/pole:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/pole:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/pole:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/tf1:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/tf1:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/tf1:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/tf1s:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/tf1s:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/tf1s:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "filters.lib/version": "1.7.1"
+        },
+        {
+            "filters.lib/zero:author": "Julius O. Smith III"
+        },
+        {
+            "filters.lib/zero:copyright": "Copyright (C) 2003-2019 by Julius O. Smith III <jos@ccrma.stanford.edu>"
+        },
+        {
+            "filters.lib/zero:license": "MIT-style STK-4.3 license"
+        },
+        {
+            "maths.lib/author": "GRAME"
+        },
+        {
+            "maths.lib/copyright": "GRAME"
+        },
+        {
+            "maths.lib/license": "LGPL with exception"
+        },
+        {
+            "maths.lib/name": "Faust Math Library"
+        },
+        {
+            "maths.lib/version": "2.9.0"
+        },
+        {
+            "name": "bass"
+        },
+        {
+            "noises.lib/name": "Faust Noise Generator Library"
+        },
+        {
+            "noises.lib/version": "1.5.0"
+        },
+        {
+            "platform.lib/name": "Generic Platform Library"
+        },
+        {
+            "platform.lib/version": "1.3.0"
+        }
+    ],
+    "ui": [
+        {
+            "type": "vgroup",
+            "label": "bass",
+            "items": [
+                {
+                    "type": "hgroup",
+                    "label": "Control",
+                    "meta": [
+                        {
+                            "1": ""
+                        }
+                    ],
+                    "items": [
+                        {
+                            "type": "hslider",
+                            "label": "BPM",
+                            "varname": "fHslider3",
+                            "shortname": "BPM",
+                            "address": "/bass/Control/BPM",
+                            "index": 28,
+                            "init": 120,
+                            "min": 40,
+                            "max": 240,
+                            "step": 1
+                        },
+                        {
+                            "type": "hslider",
+                            "label": "Camara Lenta",
+                            "varname": "fHslider1",
+                            "shortname": "Camara_Lenta",
+                            "address": "/bass/Control/Camara_Lenta",
+                            "index": 4,
+                            "init": 0,
+                            "min": 0,
+                            "max": 1,
+                            "step": 0.01
+                        },
+                        {
+                            "type": "hslider",
+                            "label": "Octava Base",
+                            "varname": "fHslider4",
+                            "shortname": "Octava_Base",
+                            "address": "/bass/Control/Octava_Base",
+                            "index": 132,
+                            "init": 0,
+                            "min": -2,
+                            "max": 2,
+                            "step": 1
+                        },
+                        {
+                            "type": "hslider",
+                            "label": "Peso Dinamico",
+                            "varname": "fHslider2",
+                            "shortname": "Peso_Dinamico",
+                            "address": "/bass/Control/Peso_Dinamico",
+                            "index": 8,
+                            "init": 0,
+                            "min": 0,
+                            "max": 1,
+                            "step": 0.01
+                        },
+                        {
+                            "type": "hslider",
+                            "label": "Saturacion",
+                            "varname": "fHslider0",
+                            "shortname": "Saturacion",
+                            "address": "/bass/Control/Saturacion",
+                            "index": 0,
+                            "init": 0,
+                            "min": 0,
+                            "max": 1,
+                            "step": 0.001
+                        }
+                    ]
+                },
+                {
+                    "type": "hgroup",
+                    "label": "Secuenciador",
+                    "meta": [
+                        {
+                            "2": ""
+                        }
+                    ],
+                    "items": [
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 1",
+                            "meta": [
+                                {
+                                    "1": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox0",
+                                    "shortname": "Paso_1_Activo",
+                                    "address": "/bass/Secuenciador/Paso_1/Activo",
+                                    "index": 48,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider5",
+                                    "shortname": "Paso_1_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_1/Nota__0-11_",
+                                    "index": 136,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 2",
+                            "meta": [
+                                {
+                                    "2": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox1",
+                                    "shortname": "Paso_2_Activo",
+                                    "address": "/bass/Secuenciador/Paso_2/Activo",
+                                    "index": 52,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider6",
+                                    "shortname": "Paso_2_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_2/Nota__0-11_",
+                                    "index": 140,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 3",
+                            "meta": [
+                                {
+                                    "3": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox2",
+                                    "shortname": "Paso_3_Activo",
+                                    "address": "/bass/Secuenciador/Paso_3/Activo",
+                                    "index": 56,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider7",
+                                    "shortname": "Paso_3_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_3/Nota__0-11_",
+                                    "index": 144,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 4",
+                            "meta": [
+                                {
+                                    "4": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox3",
+                                    "shortname": "Paso_4_Activo",
+                                    "address": "/bass/Secuenciador/Paso_4/Activo",
+                                    "index": 60,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider8",
+                                    "shortname": "Paso_4_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_4/Nota__0-11_",
+                                    "index": 148,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 5",
+                            "meta": [
+                                {
+                                    "5": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox4",
+                                    "shortname": "Paso_5_Activo",
+                                    "address": "/bass/Secuenciador/Paso_5/Activo",
+                                    "index": 64,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider9",
+                                    "shortname": "Paso_5_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_5/Nota__0-11_",
+                                    "index": 152,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 6",
+                            "meta": [
+                                {
+                                    "6": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox5",
+                                    "shortname": "Paso_6_Activo",
+                                    "address": "/bass/Secuenciador/Paso_6/Activo",
+                                    "index": 68,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider10",
+                                    "shortname": "Paso_6_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_6/Nota__0-11_",
+                                    "index": 156,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 7",
+                            "meta": [
+                                {
+                                    "7": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox6",
+                                    "shortname": "Paso_7_Activo",
+                                    "address": "/bass/Secuenciador/Paso_7/Activo",
+                                    "index": 72,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider11",
+                                    "shortname": "Paso_7_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_7/Nota__0-11_",
+                                    "index": 160,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        },
+                        {
+                            "type": "vgroup",
+                            "label": "Paso 8",
+                            "meta": [
+                                {
+                                    "8": ""
+                                }
+                            ],
+                            "items": [
+                                {
+                                    "type": "checkbox",
+                                    "label": "Activo",
+                                    "varname": "fCheckbox7",
+                                    "shortname": "Paso_8_Activo",
+                                    "address": "/bass/Secuenciador/Paso_8/Activo",
+                                    "index": 76,
+                                    "meta": [
+                                        {
+                                            "1": ""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "hslider",
+                                    "label": "Nota (0-11)",
+                                    "varname": "fHslider12",
+                                    "shortname": "Paso_8_Nota_0_11",
+                                    "address": "/bass/Secuenciador/Paso_8/Nota__0-11_",
+                                    "index": 164,
+                                    "meta": [
+                                        {
+                                            "2": ""
+                                        }
+                                    ],
+                                    "init": 0,
+                                    "min": 0,
+                                    "max": 11,
+                                    "step": 1
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
