@@ -113,7 +113,7 @@ export default function AboutModal() {
               to lock-free C++ audio engines on embedded Linux, to offline LLM agents with no API costs.
             </p>
             <p className="text-xl text-slate-300 font-light leading-relaxed">
-              Currently completing my final semester in Electronic Engineering at Universidad Autónoma de Manizales.
+              Currently completing my final semester in Electronic Engineering at Universidad Nacional de Colombia (UNAL).
               Open to <span className="text-cyan-400 font-medium">remote</span> and{' '}
               <span className="text-cyan-400 font-medium">hybrid roles</span> in Deep Tech,
               AudioTech, and Edge AI — where microseconds and memory bytes actually matter.
@@ -158,8 +158,8 @@ export default function AboutModal() {
                 <span className="text-[10px] font-mono text-cyan-400/70 tracking-[0.2em] uppercase">Education</span>
               </div>
               <p className="text-slate-200 text-sm font-medium">B.Sc. Electronic Engineering</p>
-              <p className="text-slate-400 text-xs font-mono">Universidad Autónoma de Manizales</p>
-              <p className="text-cyan-400/70 text-xs font-mono mt-1">Final semester · 2025</p>
+              <p className="text-slate-400 text-xs font-mono">Universidad Nacional de Colombia (UNAL)</p>
+              <p className="text-cyan-400/70 text-xs font-mono mt-1">Final semester · 2026</p>
             </div>
             <div className="flex-1 border border-cyan-500/15 bg-black/30 rounded-xl p-5 flex flex-col gap-2">
               <div className="flex items-center gap-2">
