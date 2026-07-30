@@ -82,7 +82,8 @@ export const projectsData: Record<string, ProjectData> = {
     videoSrc: '/assets/projects/restaurante-preview.mp4',
     telemetry: [
       { label: 'MODEL',    value: 'Llama 3.1' },
-      { label: 'ACCURACY', value: '100%'      },
+      { label: 'TOOL_SUCCESS', value: '97.3%'     },
+
       { label: 'LATENCY',  value: '<800ms'    },
       { label: 'BACKEND',  value: 'OFFLINE'   },
     ],

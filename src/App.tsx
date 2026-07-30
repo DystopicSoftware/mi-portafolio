@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { Perf } from 'r3f-perf'
+
 import AmbientDust from './components/3d/AmbientDust'
 import TesseractSwarm from './components/3d/TesseractSwarm'
 import OverlayUI from './components/ui/OverlayUI'
@@ -18,7 +19,8 @@ function App() {
           dpr={[1, 1.5]}
           gl={{ powerPreference: 'high-performance', antialias: false, alpha: true }}
         >
-          <Perf position="top-left" minimal />
+          {import.meta.env.DEV && <Perf position="top-left" minimal />}
+
           <ambientLight intensity={0.4} />
           <directionalLight position={[10, 10, 5]} intensity={2.0} color="#ffffff" />
 
