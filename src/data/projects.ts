@@ -28,12 +28,12 @@ export const projectsData: Record<string, ProjectData> = {
   'edge-computing': {
     title: 'Antioquia Zana 3D',
     description:
-      'SPA interactiva con ecosistema 3D para la divulgación científica. Implementación de glassmorphism y renderizado de alto rendimiento con React Three Fiber.',
+      'Interactive 3D SPA built for scientific outreach. Implements real-time glassmorphism and high-performance GPU rendering with React Three Fiber, achieving 60 FPS with zero memory leaks across the entire scene lifecycle.',
     techStack: [
-      { name: 'React 19',    detail: 'Arquitectura de componentes con Concurrent Mode y Suspense para carga diferida de la escena 3D.' },
-      { name: 'Three.js',    detail: 'Motor de renderizado WebGL. Gestión de geometrías, materiales y el loop de animación a 60 fps.' },
-      { name: 'Tailwind v4', detail: 'Sistema de diseño utilitario con tokens CSS personalizados para el glassmorphism y paleta técnica.' },
-      { name: 'Zustand',     detail: 'Store global minimalista para el estado de intercepción 3D→2D sin re-renders innecesarios.' },
+      { name: 'React 19',    detail: 'Component architecture using Concurrent Mode and Suspense for deferred loading of the 3D scene without blocking the main thread.' },
+      { name: 'Three.js',    detail: 'WebGL rendering engine. Full ownership of geometry, materials, and the animation loop at a locked 60 FPS.' },
+      { name: 'Tailwind v4', detail: 'Utility-first design system with custom CSS tokens for the glassmorphism aesthetic and technical color palette.' },
+      { name: 'Zustand',     detail: 'Minimal global store managing the 3D→2D interception state without triggering unnecessary re-renders.' },
     ],
     githubUrl: 'https://github.com/DystopicSoftware/antioquia-zana-mis-pruebas',
     liveUrl:   'https://antioquia-zana-ur48.vercel.app/',
@@ -49,12 +49,12 @@ export const projectsData: Record<string, ProjectData> = {
   'hardware': {
     title: 'DSP Bass Synth',
     description:
-      'Sintetizador de bajo digital mediante modelado físico implementado en FPGA. Procesamiento DSP en hardware dedicado para ultra-baja latencia y respuesta en tiempo real.',
+      'Physical modeling digital bass synthesizer implemented entirely in hardware on an FPGA. The algorithm was first designed in Faust DSP, then manually translated to Q15 fixed-point arithmetic in pure Verilog — achieving 2.1ms latency with a 27MHz clock and a direct 24-bit I²S DAC output, with no OS or CPU overhead.',
     techStack: [
-      { name: 'Verilog',  detail: 'Descripción HDL del core DSP: osciladores digitales, filtros IIR y modulación de envolvente.' },
-      { name: 'FPGA',     detail: 'Implementación en hardware Tang Nano 20k. Ejecución paralela de pipelines de audio a nivel de gates.' },
-      { name: 'DSP',      detail: 'Algoritmos de modelado físico de cuerdas (Karplus-Strong) con tablas de onda pre-calculadas.' },
-      { name: 'Tang20k',  detail: 'SoC FPGA Gowin GW2A-18. 20k LUTs, PLL integrado a 27MHz y DAC de audio I²S de 24-bit.' },
+      { name: 'Verilog',  detail: 'HDL description of the full DSP core: Karplus-Strong waveguide delay line, IIR damping filter, and envelope modulation — all in Q15 signed fixed-point arithmetic.' },
+      { name: 'FPGA',     detail: 'Deployed on Gowin Tang Nano 20K (GW2A-18). Parallel execution of audio pipelines at the gate level. Debugged with on-chip Logic Analyzer (GAO).' },
+      { name: 'Faust',    detail: 'Algorithm originally prototyped in Faust DSP language. The physical model mathematics were then hand-translated to Verilog for FPGA implementation.' },
+      { name: 'Tang20k',  detail: 'Gowin GW2A-18 SoC FPGA. 20K LUTs, integrated PLL at 27MHz, and a 24-bit I²S audio DAC driven directly from the fabric.' },
     ],
     githubUrl: 'https://github.com/DystopicSoftware/dsp-bass-synth',
     liveUrl:   null,
@@ -68,24 +68,23 @@ export const projectsData: Record<string, ProjectData> = {
 
   'edge-ai': {
     title: 'RestauranteIA / Local Agents',
-    description: 'Sistema multi-agente 100% offline para la automatización y control de inventario de un restaurante. Impulsado por modelos locales (Llama 3.1 vía Ollama) integrados en una interfaz de Streamlit y bases de datos relacionales SQLite.\n\nEl núcleo arquitectónico destaca por la implementación de Tool Calling nativo con tipado estricto mediante Pydantic. Esto supera las limitaciones de parsing de strings crudos y elimina las alucinaciones dentro del bucle de ejecución del AgentExecutor.',
+    description: '100% offline multi-agent system for restaurant inventory automation and control. Powered by local LLMs (Llama 3.1 via Ollama) integrated with a Streamlit interface and SQLite relational databases — zero cloud dependency, zero API costs.\n\nThe architectural core implements native Tool Calling with strict Pydantic type-checking. This eliminates raw string parsing limitations and suppresses hallucinations within the AgentExecutor execution loop.',
     techStack: [
-      { name: 'Python',    detail: 'Backend principal. Orquestación del pipeline de inferencia, visión y lógica de negocio.' },
-      { name: 'Ollama',    detail: 'Framework local para la ejecución de LLMs sin necesidad de conexión a internet o APIs externas.' },
-      { name: 'Llama 3.1', detail: 'Modelo principal configurado para tareas de Tool Calling y parseo JSON nativo.' },
-      { name: 'LangChain', detail: 'Framework de composición de agentes. Uso de create_tool_calling_agent y StructuredTool.' },
-      { name: 'SQLite',    detail: 'Persistencia de datos. Bases relacionales para Inventario, Ventas y Recetas.' },
-      { name: 'Streamlit', detail: 'Frontend reactivo para el POS y dashboard administrativo.' },
+      { name: 'Python',    detail: 'Primary backend. Orchestrates the full inference pipeline, business logic, and agent lifecycle management.' },
+      { name: 'Ollama',    detail: 'Local LLM runtime. Enables model inference without any internet connection or external API calls.' },
+      { name: 'Llama 3.1', detail: 'Primary model configured for native Tool Calling and structured JSON output parsing.' },
+      { name: 'LangChain', detail: 'Agent composition framework. Uses create_tool_calling_agent and StructuredTool for reliable function dispatch.' },
+      { name: 'SQLite',    detail: 'Data persistence layer. Relational databases for Inventory, Sales, and Recipes with full CRUD via agent tools.' },
+      { name: 'Streamlit', detail: 'Reactive frontend for the POS terminal and administrative dashboard.' },
     ],
     githubUrl: 'https://github.com/DystopicSoftware/RestauranteIA',
     liveUrl: null,
     videoSrc: '/assets/projects/restaurante-preview.mp4',
     telemetry: [
-      { label: 'MODEL',    value: 'Llama 3.1' },
+      { label: 'MODEL',        value: 'Llama 3.1' },
       { label: 'TOOL_SUCCESS', value: '97.3%'     },
-
-      { label: 'LATENCY',  value: '<800ms'    },
-      { label: 'BACKEND',  value: 'OFFLINE'   },
+      { label: 'LATENCY',      value: '<800ms'    },
+      { label: 'BACKEND',      value: 'OFFLINE'   },
     ],
   },
 };

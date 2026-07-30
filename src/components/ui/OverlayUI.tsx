@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Hero } from '../../sections/Hero'
 import ProjectHologram from './ProjectHologram'
+import AboutModal from './AboutModal'
 import { AiTerminal } from './AiTerminal'
 import { usePortfolioStore } from '../../store/usePortfolioStore'
 import { projectsData } from '../../data/projects'
@@ -8,6 +9,7 @@ import { projectsData } from '../../data/projects'
 export default function OverlayUI() {
   const activeCategory = usePortfolioStore((state) => state.activeCategory);
   const setActiveCategory = usePortfolioStore((state) => state.setActiveCategory);
+  const showAbout = usePortfolioStore((state) => state.showAbout);
 
   const activeProject = activeCategory ? projectsData[activeCategory] : null;
 
@@ -44,6 +46,9 @@ export default function OverlayUI() {
           onClose={() => setActiveCategory(null)}
         />
       )}
+
+      {/* ── Modal de About / Perfil ── */}
+      {showAbout && <AboutModal />}
 
       {/* ── Terminal IA Flotante ── */}
       <AiTerminal />

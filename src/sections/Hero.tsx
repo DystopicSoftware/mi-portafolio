@@ -11,6 +11,7 @@ const techIcons = [
 export function Hero() {
   const activeCategory    = usePortfolioStore((s) => s.activeCategory);
   const setActiveCategory = usePortfolioStore((s) => s.setActiveCategory);
+  const setShowAbout      = usePortfolioStore((s) => s.setShowAbout);
 
   // Cuando hay un proyecto activo, toda la tarjeta (incluyendo contactos) se desvanece
   const isHidden = activeCategory !== null;
@@ -92,6 +93,13 @@ export function Hero() {
           }`}
           inert={isHidden ? true : undefined}
         >
+          <button
+            onClick={() => setShowAbout(true)}
+            className="flex items-center gap-2 px-5 py-2 rounded-full bg-cyan-500/20 border border-cyan-500/50 hover:bg-cyan-500/40 hover:text-white transition-all text-sm text-cyan-300 font-bold backdrop-blur-md cursor-pointer pointer-events-auto shadow-[0_0_15px_rgba(0,255,204,0.3)]"
+          >
+            <User size={16} /> <span>About & CV</span>
+          </button>
+
           <a
             href="https://www.linkedin.com/in/juan-villada-sierra/"
             target="_blank" rel="noopener noreferrer"
