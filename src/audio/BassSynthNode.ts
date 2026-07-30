@@ -1,8 +1,7 @@
-import { FaustMonoDspGenerator, FaustMonoAudioWorkletNode } from '@grame/faustwasm';
+import type { FaustMonoAudioWorkletNode } from '@grame/faustwasm';
 
 let audioContext: AudioContext | null = null;
 let faustNode: FaustMonoAudioWorkletNode | null = null;
-let generator: FaustMonoDspGenerator | null = null;
 
 export async function initAudioEngine(): Promise<FaustMonoAudioWorkletNode> {
   if (faustNode) return faustNode;
@@ -15,29 +14,14 @@ export async function initAudioEngine(): Promise<FaustMonoAudioWorkletNode> {
     await audioContext.resume();
   }
 
-  // 2. Fetch DSP Meta and Wasm Module
-  // Using absolute paths to the public directory
-  const dspMetaRes = await fetch('/assets/audio/dsp-meta.json');
-  const dspMeta = await dspMetaRes.json();
+  // 2. Load the unbundled create-node.js from public directory.
+  // This bypasses Vite's minifier which breaks the AudioWorklet processor string ('UM is not defined')
+  // @ts-ignore: This module is resolved by Vite at runtime from the public folder
+  const faustModule = await import(/* @vite-ignore */ '/assets/audio/create-node.js');
   
-  // We use ArrayBuffer fallback for safety in PWAs and Vite static serving
-  const wasmRes = await fetch('/assets/audio/dsp-module.wasm');
-  const wasmBuffer = await wasmRes.arrayBuffer();
-  const dspModule = await WebAssembly.compile(wasmBuffer);
-
-  // 3. Create Generator and Node
-  generator = new FaustMonoDspGenerator();
-  
-  faustNode = await generator.createNode(
-    audioContext,
-    'bass', // DSP Name
-    {
-      module: dspModule,
-      json: JSON.stringify(dspMeta),
-      soundfiles: {}
-    },
-    false // useScriptProcessor = false (use AudioWorklet)
-  ) as FaustMonoAudioWorkletNode;
+  // 3. Create the node using the faust2wasm generated wrapper
+  const result = await faustModule.createFaustNode(audioContext, "bass", 0);
+  faustNode = result.faustNode as FaustMonoAudioWorkletNode;
 
   if (!faustNode) {
     throw new Error('Failed to create Faust Audio Node');
