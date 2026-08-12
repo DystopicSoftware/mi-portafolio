@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, GitBranch, X } from 'lucide-react';
+import { ExternalLink, GitBranch, X, Cpu } from 'lucide-react';
 import type { TechItem, TelemetryMetric } from '../../data/projects';
 import { InteractiveSequencer } from './InteractiveSequencer';
 
@@ -72,8 +72,44 @@ export default function ProjectHologram({
   onClose,
 }: ProjectHologramProps) {
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  const [sequencerOpen, setSequencerOpen] = useState(false);
+  const isDspProject = title === 'DSP Bass Synth';
 
   return (
+    <>
+    {/* ── Fullscreen Sequencer Overlay ── */}
+    <AnimatePresence>
+      {sequencerOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl flex flex-col"
+        >
+          {/* Fullscreen header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-500/20 bg-black/60 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00e5ff]" />
+              <span className="text-[10px] font-mono text-cyan-500/60 tracking-[0.3em] uppercase">SYSTEM :: WASM_DSP_MODULE</span>
+            </div>
+            <h2 className="text-xl font-black tracking-widest uppercase text-cyan-400 font-mono">DSP BASS SYNTH — INTERACTIVE</h2>
+            <button
+              onClick={() => setSequencerOpen(false)}
+              className="text-slate-500 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all p-2 rounded-lg border border-transparent hover:border-cyan-500/20"
+              aria-label="Close sequencer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          {/* Sequencer fills the rest */}
+          <div className="flex-1 overflow-hidden p-4 md:p-6">
+            <InteractiveSequencer onClose={() => setSequencerOpen(false)} />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    {
     <div
       className="fixed inset-0 z-[9999] pointer-events-auto flex items-center justify-center bg-black/40 backdrop-blur-xl"
       onClick={onClose}
@@ -153,8 +189,32 @@ export default function ProjectHologram({
 
           {/* Columna Izquierda: Reproductor Holográfico o Standby */}
         <div className="relative w-full h-full min-h-[180px] bg-[#020508]/80 border border-cyan-500/20 rounded-xl overflow-hidden flex items-center justify-center group shadow-inner">
-          {title === 'DSP Bass Synth' ? (
-            <InteractiveSequencer onClose={onClose} />
+          {isDspProject ? (
+            /* DSP project: launch button opens fullscreen sequencer */
+            <div className="flex flex-col items-center justify-center gap-6 p-8 text-center">
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 rounded-full border border-cyan-500/30 bg-cyan-500/5 flex items-center justify-center animate-pulse">
+                  <Cpu className="w-8 h-8 text-cyan-400" />
+                </div>
+                <p className="text-slate-400 font-mono text-sm max-w-[200px] leading-relaxed">
+                  Karplus-Strong engine compiled to WebAssembly
+                </p>
+              </div>
+              <button
+                onClick={() => setSequencerOpen(true)}
+                className="group relative flex items-center gap-3 px-6 py-4 font-mono font-bold tracking-widest uppercase text-sm
+                  bg-cyan-500/10 hover:bg-cyan-500/20 border-2 border-cyan-400/70 hover:border-cyan-400
+                  text-cyan-300 hover:text-cyan-200 rounded-xl transition-all duration-300
+                  shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:shadow-[0_0_35px_rgba(0,229,255,0.3)]"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <svg className="w-5 h-5 relative z-10" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                </svg>
+                <span className="relative z-10">LAUNCH SEQUENCER</span>
+              </button>
+              <p className="text-slate-600 font-mono text-[10px] tracking-wider">Full-screen · WebAssembly · Web Audio API</p>
+            </div>
           ) : videoSrc ? (
             <>
               {/* playsInline y muted son críticos para que el Autoplay funcione en todos los navegadores sin bloquear la UI */}
@@ -277,5 +337,7 @@ export default function ProjectHologram({
         </div>
       </motion.div>
     </div>
+    }
+    </>
   );
 }
