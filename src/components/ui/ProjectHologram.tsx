@@ -33,13 +33,13 @@ function CornerMark({ pos }: { pos: 'tl' | 'tr' | 'bl' | 'br' }) {
 // ── Panel de telemetría con métricas reales ───────────────────────────────────
 function TelemetryPanel({ metrics }: { metrics: TelemetryMetric[] }) {
   return (
-    <div className="flex gap-5 border border-cyan-500/20 bg-black/40 px-5 py-3 rounded-md mt-3">
+    <div className="flex flex-wrap gap-3 md:gap-5 border border-cyan-500/20 bg-black/40 px-3 md:px-5 py-2 md:py-3 rounded-md mt-3">
       {metrics.map((t) => (
         <div key={t.label} className="flex flex-col gap-0.5">
-          <span className="text-[10px] font-mono text-cyan-500/60 tracking-[0.2em] uppercase">
+          <span className="text-[9px] md:text-[10px] font-mono text-cyan-500/60 tracking-[0.2em] uppercase">
             {t.label}
           </span>
-          <span className="text-2xl font-bold text-white leading-none font-mono">
+          <span className="text-lg md:text-2xl font-bold text-white leading-none font-mono">
             {t.value}
           </span>
         </div>
@@ -93,7 +93,7 @@ export default function ProjectHologram({
               <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00e5ff]" />
               <span className="text-[10px] font-mono text-cyan-500/60 tracking-[0.3em] uppercase">SYSTEM :: WASM_DSP_MODULE</span>
             </div>
-            <h2 className="text-xl font-black tracking-widest uppercase text-cyan-400 font-mono">DSP BASS SYNTH — INTERACTIVE</h2>
+            <h2 className="hidden sm:block text-base md:text-xl font-black tracking-widest uppercase text-cyan-400 font-mono">DSP BASS SYNTH — INTERACTIVE</h2>
             <button
               onClick={() => setSequencerOpen(false)}
               className="text-slate-500 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all p-2 rounded-lg border border-transparent hover:border-cyan-500/20"
@@ -123,7 +123,7 @@ export default function ProjectHologram({
         onClick={(e) => e.stopPropagation()}
         className={[
           'relative overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/30',
-          'w-[90vw] max-w-4xl max-h-[90vh] min-h-[65vh]',
+          'w-[95vw] md:w-[90vw] max-w-4xl max-h-[92vh] min-h-[70vh]',
           'flex flex-col',
           'bg-black/40 backdrop-blur-xl',
           'border-[0.5px] border-cyan-500/20 rounded-2xl',
@@ -140,7 +140,7 @@ export default function ProjectHologram({
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
 
         {/* ── HEADER ─────────────────────────────────────────────────────────── */}
-        <div className="flex justify-between items-start px-10 pt-8 pb-6 border-b border-cyan-500/10">
+        <div className="flex justify-between items-start px-4 md:px-10 pt-5 md:pt-8 pb-4 md:pb-6 border-b border-cyan-500/10">
           <div className="flex flex-col gap-3 flex-1 min-w-0">
 
             {/* Etiqueta de sistema */}
@@ -152,7 +152,7 @@ export default function ProjectHologram({
             </div>
 
             {/* Título */}
-            <h2 className="text-5xl font-black tracking-widest uppercase text-cyan-400 font-sans leading-none">
+            <h2 className="text-3xl md:text-5xl font-black tracking-widest uppercase text-cyan-400 font-sans leading-none">
               {title}
             </h2>
 
@@ -185,7 +185,7 @@ export default function ProjectHologram({
         </div>
 
         {/* ── BODY ───────────────────────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 gap-8 flex-1 min-h-0 px-10 py-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 flex-1 min-h-0 px-4 md:px-10 py-4 md:py-7">
 
           {/* Columna Izquierda: Reproductor Holográfico o Standby */}
         <div className="relative w-full h-full min-h-[180px] bg-[#020508]/80 border border-cyan-500/20 rounded-xl overflow-hidden flex items-center justify-center group shadow-inner">
@@ -249,7 +249,7 @@ export default function ProjectHologram({
           <div className="flex flex-col gap-6 overflow-y-auto pr-1">
 
             {/* Descripción */}
-            <p className="text-2xl text-slate-300 font-light leading-relaxed">
+            <p className="text-base md:text-2xl text-slate-300 font-light leading-relaxed">
               {description}
             </p>
 
@@ -270,7 +270,7 @@ export default function ProjectHologram({
                       key={tech.name}
                       onClick={() => setActiveTech(isActive ? null : tech.name)}
                       className={[
-                        'text-lg font-mono px-4 py-2 rounded-md tracking-wider transition-all duration-200 cursor-pointer',
+                        'text-sm md:text-lg font-mono px-3 md:px-4 py-1.5 md:py-2 rounded-md tracking-wider transition-all duration-200 cursor-pointer',
                         'border focus:outline-none',
                         isActive
                           ? 'bg-cyan-500/15 border-cyan-400 text-cyan-300 shadow-[0_0_12px_rgba(0,229,255,0.2)]'
@@ -310,7 +310,7 @@ export default function ProjectHologram({
         </div>
 
         {/* ── FOOTER ─────────────────────────────────────────────────────────── */}
-        <div className="px-10 pb-8 pt-5 border-t border-cyan-500/10">
+        <div className="px-4 md:px-10 pb-4 md:pb-8 pt-4 md:pt-5 border-t border-cyan-500/10">
           <a
             href={liveUrl || githubUrl}
             target="_blank"
@@ -320,8 +320,8 @@ export default function ProjectHologram({
               'bg-cyan-500/5 hover:bg-cyan-500/10',
               'border border-cyan-500/20 hover:border-cyan-500/50',
               'text-cyan-400 hover:text-cyan-300',
-              'font-mono text-xl font-bold tracking-wide uppercase',
-              'py-5 rounded-xl',
+              'font-mono text-sm md:text-xl font-bold tracking-wide uppercase',
+              'py-4 md:py-5 rounded-xl',
               'transition-all duration-300 cursor-pointer',
               'relative overflow-hidden group',
             ].join(' ')}
