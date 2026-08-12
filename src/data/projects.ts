@@ -56,7 +56,7 @@ export const projectsData: Record<string, ProjectData> = {
       { name: 'Faust',    detail: 'Algorithm originally prototyped in Faust DSP language. The physical model mathematics were then hand-translated to Verilog for FPGA implementation.' },
       { name: 'Tang20k',  detail: 'Gowin GW2A-18 SoC FPGA. 20K LUTs, integrated PLL at 27MHz, and a 24-bit I²S audio DAC driven directly from the fabric.' },
     ],
-    githubUrl: 'https://github.com/DystopicSoftware/dsp-bass-synth',
+    githubUrl: 'https://github.com/DystopicSoftware/dsp-bass-synth-tang20k',
     liveUrl:   null,
     telemetry: [
       { label: 'LATENCY', value: '2.1ms'  },
