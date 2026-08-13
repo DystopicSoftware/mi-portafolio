@@ -83,18 +83,32 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
   }, []);
 
   // ── INIT SCREEN ──────────────────────────────────────────────────────────────
+  // translate="no" + class="notranslate" prevent Google Translate / Safari
+  // AutoTranslate from injecting <font> wrappers inside this DSP UI.
+  // Bare text nodes mutated by the browser engine cause React's removeChild
+  // to throw NotFoundError (virtual DOM / real DOM desync crash).
   if (!isAudioReady) {
     return (
-      <div className="flex flex-col items-center justify-center h-full w-full bg-black/80 rounded-xl border border-cyan-500/30 p-8 text-center">
-        <h3 className="text-2xl font-bold text-cyan-400 mb-4 tracking-widest font-mono">DSP BASS SYNTH ENGINE</h3>
+      <div
+        translate="no"
+        className="notranslate flex flex-col items-center justify-center h-full w-full bg-black/80 rounded-xl border border-cyan-500/30 p-8 text-center"
+      >
+        {/* PASO 2: h3 text is not dynamic — safe, but still inside notranslate root */}
+        <h3 className="text-2xl font-bold text-cyan-400 mb-4 tracking-widest font-mono">
+          <span>DSP BASS SYNTH ENGINE</span>
+        </h3>
         <p className="text-slate-400 mb-8 max-w-md font-mono text-sm">
-          Warning: This interactive demo compiles a Karplus-Strong physical model into WebAssembly and runs natively in your browser using the Web Audio API.
+          <span>
+            Warning: This interactive demo compiles a Karplus-Strong physical model
+            into WebAssembly and runs natively in your browser using the Web Audio API.
+          </span>
         </p>
         <button
           onClick={startAudio}
           disabled={isLoading}
           className="px-8 py-4 bg-cyan-500/10 hover:bg-cyan-500/30 border border-cyan-400 text-cyan-400 font-mono font-bold tracking-widest uppercase transition-all flex items-center gap-2 group"
         >
+          {/* PASO 2: dynamic text branch — each branch is a single span, never a bare string */}
           {isLoading ? (
             <span className="animate-pulse">INITIALIZING COMPILER...</span>
           ) : (
@@ -102,7 +116,7 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
               </svg>
-              INITIATE AUDIO ENGINE
+              <span>INITIATE AUDIO ENGINE</span>
             </>
           )}
         </button>
@@ -111,20 +125,31 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
   }
 
   // ── MAIN UI ──────────────────────────────────────────────────────────────────
+  // PASO 1: translate="no" on the root — the entire sequencer UI is technical
+  // DSP content (note names, parameter labels, WASM status). We never want the
+  // browser to touch these strings. This also prevents the font-injection crash.
   return (
-    <div className="flex flex-col h-full w-full bg-slate-900/90 rounded-xl border border-cyan-500/30 overflow-hidden font-mono text-xs">
+    <div
+      translate="no"
+      className="notranslate flex flex-col h-full w-full bg-slate-900/90 rounded-xl border border-cyan-500/30 overflow-hidden font-mono text-xs"
+    >
 
       {/* Header */}
       <div className="flex items-center bg-black/60 px-4 py-3 border-b border-cyan-500/20 gap-4">
         <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isPlaying ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+        {/* PASO 2: dynamic status string wrapped in a nested span — React holds
+            a stable reference to the outer span, not the inner text node. If
+            Google Translate wraps the inner text, the outer span is unaffected. */}
         <span className="text-cyan-400 font-bold tracking-widest uppercase flex-1">
-          WASM DSP ENGINE : {isPlaying ? 'RUNNING' : 'SUSPENDED'}
+          <span>{'WASM DSP ENGINE : '}</span>
+          <span>{isPlaying ? 'RUNNING' : 'SUSPENDED'}</span>
         </span>
         <button
           onClick={togglePlay}
           className="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 rounded transition-colors"
         >
-          {isPlaying ? 'PAUSE' : 'PLAY'}
+          {/* PASO 2: each branch of a ternary is its own span */}
+          {isPlaying ? <span>PAUSE</span> : <span>PLAY</span>}
         </button>
       </div>
 
@@ -183,8 +208,9 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
                         : 'bg-slate-800 hover:bg-slate-700 text-slate-500'}
                     `}
                   >
-                    <span className="text-[10px] tracking-wider">S{i + 1}</span>
-                    <span className="text-sm font-bold">{activeName}</span>
+                    {/* PASO 2: note ID and name — separate spans, each holds one value */}
+                    <span className="text-[10px] tracking-wider"><span>{'S'}{i + 1}</span></span>
+                    <span className="text-sm font-bold"><span>{activeName}</span></span>
                     <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                       step.active ? 'bg-cyan-400 shadow-[0_0_6px_theme(colors.cyan.400)]' : 'bg-slate-600'
                     }`} />
@@ -212,7 +238,9 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
                             }
                           `}
                         >
-                          {name}
+                          {/* PASO 2: note name (C, C#, D…) wrapped — critical, this
+                              changes on every render and is a prime crash vector */}
+                          <span>{name}</span>
                         </button>
                       );
                     })}
@@ -220,7 +248,9 @@ export const InteractiveSequencer = ({ onClose: _onClose }: InteractiveSequencer
 
                   {/* ── Bottom: octave display ── */}
                   <div className="text-center text-[9px] text-slate-600 py-1 bg-black/20">
-                    {activeName}{4 + octave}
+                    {/* PASO 2: concatenated text split into two spans — never a bare
+                        mixed expression like {str}{num} which creates two text nodes */}
+                    <span>{activeName}</span><span>{4 + octave}</span>
                   </div>
                 </div>
               );

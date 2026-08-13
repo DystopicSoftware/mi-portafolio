@@ -1,21 +1,23 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, GitBranch, X, Cpu } from 'lucide-react';
-import type { TechItem, TelemetryMetric } from '../../data/projects';
+import type { TechItem, TelemetryMetric, I18nString } from '../../data/projects';
+import { t } from '../../data/projects';
 import { InteractiveSequencer } from './InteractiveSequencer';
 import { SystemDiagnostic } from './SystemDiagnostic';
 import { preWarmAudioContext } from '../../audio/BassSynthNode';
+import { usePortfolioStore } from '../../store/usePortfolioStore';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props
 // ─────────────────────────────────────────────────────────────────────────────
 export interface ProjectHologramProps {
-  title: string;
-  description: string;
+  title: I18nString;
+  description: I18nString;
   techStack: TechItem[];
   githubUrl: string;
   liveUrl: string | null;
-  videoSrc?: string; // <-- Propiedad opcional añadida
+  videoSrc?: string;
   telemetry: TelemetryMetric[];
   onClose: () => void;
 }
@@ -75,7 +77,12 @@ export default function ProjectHologram({
 }: ProjectHologramProps) {
   const [activeTech, setActiveTech] = useState<string | null>(null);
   const [sequencerOpen, setSequencerOpen] = useState(false);
-  const isDspProject = title === 'DSP Bass Synth';
+  const { language } = usePortfolioStore();
+
+  // Resolve bilingual fields for the active language
+  const resolvedTitle       = t(title, language);
+  const resolvedDescription = t(description, language);
+  const isDspProject = resolvedTitle === 'DSP Bass Synth' || resolvedTitle === 'Sintetizador de Bajo DSP';
 
   return (
     <>
@@ -88,6 +95,7 @@ export default function ProjectHologram({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl flex flex-col"
+          translate="no"
         >
           {/* Fullscreen header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-500/20 bg-black/60 flex-shrink-0">
@@ -157,7 +165,7 @@ export default function ProjectHologram({
 
             {/* Título */}
             <h2 className="text-3xl md:text-5xl font-black tracking-widest uppercase text-cyan-400 font-sans leading-none">
-              {title}
+              <span>{resolvedTitle}</span>
             </h2>
 
             {/* Panel de telemetría */}
@@ -170,7 +178,9 @@ export default function ProjectHologram({
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-60" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-400" />
                 </span>
-                <span className="text-[9px] font-mono text-cyan-400/70 tracking-[0.2em] uppercase">LIVE</span>
+                {/* PASO 2: status labels are fixed strings but we still wrap them
+                    defensively — the notranslate boundary is the outer flex div */}
+                <span className="text-[9px] font-mono text-cyan-400/70 tracking-[0.2em] uppercase"><span>LIVE</span></span>
               </div>
               <StatusBadge label="SIGNAL" value="—92dB" />
               <StatusBadge label="UPLINK" value="OK" />
@@ -256,7 +266,7 @@ export default function ProjectHologram({
 
             {/* Descripción */}
             <p className="text-base md:text-2xl text-slate-300 font-light leading-relaxed">
-              {description}
+              <span>{resolvedDescription}</span>
             </p>
 
             {/* ── Stack técnico INTERACTIVO ── */}
@@ -302,10 +312,10 @@ export default function ProjectHologram({
                       className="p-4 bg-cyan-950/40 border-l-2 border-cyan-500 rounded-r-md"
                     >
                       <span className="text-cyan-400 font-bold text-sm mr-2 font-mono tracking-wider">
-                        {activeTech}:
+                        <span>{activeTech}:</span>
                       </span>
                       <span className="text-slate-300 text-sm leading-relaxed">
-                        {techStack.find((t) => t.name === activeTech)?.detail}
+                        <span>{techStack.find((t) => t.name === activeTech) ? t(techStack.find((tech) => tech.name === activeTech)!.detail, language) : ''}</span>
                       </span>
                     </motion.div>
                   )}
@@ -336,8 +346,11 @@ export default function ProjectHologram({
             {liveUrl
               ? <ExternalLink className="w-6 h-6 stroke-[2] relative z-10" />
               : <GitBranch className="w-6 h-6 stroke-[2] relative z-10" />}
+            {/* PASO 2: ternary produces two different strings in two different
+                branches. Without span, each branch is a bare text node that
+                Google Translate will wrap in <font>, desyncing React's vDOM. */}
             <span className="relative z-10">
-              {liveUrl ? 'INIT :: LIVE_ENVIRONMENT' : 'ACCESS :: REPOSITORY'}
+              {liveUrl ? <span>INIT :: LIVE_ENVIRONMENT</span> : <span>ACCESS :: REPOSITORY</span>}
             </span>
           </a>
         </div>

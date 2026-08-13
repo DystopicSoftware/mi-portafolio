@@ -6,10 +6,11 @@ import { Perf } from 'r3f-perf'
 import AmbientDust from './components/3d/AmbientDust'
 import TesseractSwarm from './components/3d/TesseractSwarm'
 import OverlayUI from './components/ui/OverlayUI'
+import { LanguageToggle } from './components/ui/LanguageToggle'
 
 function App() {
   // ❌ Cero suscripciones a Zustand aquí. Este componente se renderiza UNA vez.
-  
+
   return (
     <>
       {/* ── Capa 0: Canvas 3D (fondo, pointer-events bloqueados al nivel del div) ── */}
@@ -42,6 +43,16 @@ function App() {
 
       {/* ── Capa 1: UI 2D Reactiva ── */}
       <OverlayUI />
+
+      {/* ── Capa 2: HUD Global — flota por encima de todo, nunca interfiere con R3F ──
+          z-[9999] queda debajo de los modales (z-[9999x]) pero encima del canvas.
+          pointer-events-none en el wrapper + auto en el botón para no bloquear el
+          Canvas 3D con un div transparente invisible. */}
+      <div className="fixed top-6 right-6 z-[9999] pointer-events-none">
+        <div className="pointer-events-auto">
+          <LanguageToggle />
+        </div>
+      </div>
     </>
   )
 }
