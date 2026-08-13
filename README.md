@@ -27,6 +27,7 @@ A high-performance, cyberpunk-aesthetic portfolio SPA built with **React 18 + Vi
 - **DSP Bass Synth** — Karplus-Strong synthesizer implemented in Verilog (FPGA, Q15 fixed-point, 2.1ms latency) and cross-compiled to WebAssembly via Faust. Runs as a live 8-step melodic sequencer in the browser.
 - **Antioquia Zana 3D** — Scientific outreach SPA with React Three Fiber, 60 FPS GPU rendering, and zero memory leaks.
 - **RestauranteIA / Local Agents** — 100% offline multi-agent system using Llama 3.1 (Ollama), LangChain Tool Calling, Pydantic strict typing, and SQLite. Zero cloud dependency.
+- **AI Terminal (this portfolio)** — Embedded chat assistant powered by a FastAPI backend running on Vercel Serverless Functions, calling `llama-3.3-70b-versatile` via the Groq Inference API. Responds in character as Juan's portfolio agent.
 
 ---
 
@@ -142,7 +143,47 @@ const resolvedTitle = t(project.title, language); // I18nString → string
 
 ---
 
+### 4 · AI Terminal — Serverless Agent with Groq Inference
+
+**Context:** The portfolio includes an embedded chat assistant (`AiTerminal.tsx`) — a floating terminal widget that answers questions about Juan's background, projects, and skills. The backend was originally prototyped locally using **Ollama** (self-hosted LLM inference). For production, the architecture was migrated to **Groq** to eliminate the cold-start and hardware constraint problems of self-hosted inference in a serverless environment.
+
+**Architecture:**
+
+```
+Browser (React)
+  └─ POST /api/chat  →  Vercel Serverless Function
+                              └─ FastAPI (api/index.py)
+                                    └─ Groq SDK  →  llama-3.3-70b-versatile
+```
+
+The backend is a **FastAPI** application deployed as a Vercel Serverless Function (Python runtime). Key decisions:
+
+- **Global client instantiation — Warm-Start Optimization:**
+  ```python
+  # Instantiated at module level, outside the endpoint handler.
+  # Vercel reuses warm execution contexts between requests —
+  # the Groq client is initialized once, not per-call.
+  client_instance = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+  ```
+
+- **Cached System Prompt:** The agent's persona, Juan's background, and behavioral constraints are loaded from `reglas_ventas.txt` at cold-start and held in memory — zero filesystem I/O on subsequent requests.
+
+- **Context Window Management:**
+  ```python
+  # Only the last 6 messages are forwarded to the LLM.
+  # Bounds token cost and latency while keeping conversational coherence.
+  for msg in request.messages[-6:]:
+      ...
+  ```
+
+- **Model — `llama-3.3-70b-versatile`:** Groq's LPU (Language Processing Unit) hardware runs this 70B-parameter model at speeds competitive with GPT-3.5 on traditional GPU clusters — typically `<500ms` TTFT (Time to First Token).
+
+- **Why Groq over Ollama in production:** Ollama requires a persistent process with dedicated GPU/CPU — incompatible with stateless Vercel Serverless Functions. Groq provides equivalent inference quality at low latency with zero infrastructure management, as a direct API replacement for the local Ollama prototype.
+
+---
+
 ## 🚀 Local Development
+
 
 ```bash
 npm install
