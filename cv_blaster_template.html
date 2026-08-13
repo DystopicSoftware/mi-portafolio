@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Juan Villada CV</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            color: #111827;
+            line-height: 1.5;
+            font-size: 11px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0f172a;
+        }
+
+        .contact-info {
+            font-size: 10px;
+            color: #475569;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 4px;
+            margin-top: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-content {
+            margin-bottom: 12px;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 12px;
+            color: #1e293b;
+        }
+
+        .subtitle {
+            font-weight: 500;
+            font-size: 11px;
+            color: #475569;
+            font-style: italic;
+        }
+
+        .date {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        ul {
+            margin-top: 4px;
+            margin-bottom: 12px;
+            padding-left: 16px;
+        }
+
+        li {
+            margin-bottom: 3px;
+            color: #334155;
+            text-align: justify;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .skill-category {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .skill-list {
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>JUAN ESTEBAN VILLADA SIERRA</h1>
+        <div class="contact-info" style="justify-content: center;">
+            <span>+57 333 241 3337</span> | 
+            <span>jvilladas@unal.edu.co</span> | 
+            <span>linkedin.com/in/juan-villada-sierra</span> | 
+            <span>github.com/DystopicSoftware</span>
+        </div>
+    </div>
+
+    <h2>Resumen Profesional</h2>
+    <div class="section-content">
+        <p style="margin:0; text-align: justify;">Estudiante de Ingeniería Electrónica (UNAL) con perfil híbrido entre <span class="highlight">Arquitectura de Inteligencia Artificial y Growth Management</span>. Experto en la orquestación de Agentes LLM (Serverless y Locales), integraciones API (OpenAI, Claude, Groq) y automatización de flujos de trabajo (Python). Especialista en diseñar arquitecturas de datos, conectar pipelines conversacionales y optimizar procesos (Growth Mindset) aplicando análisis estructurado para la generación de demanda y automatización de CRMs.</p>
+    </div>
+
+    <h2>Educación</h2>
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Universidad Nacional de Colombia (UNAL)</span>
+            <span class="date">Manizales, Colombia</span>
+        </div>
+        <div class="flex-between" style="margin-bottom: 4px;">
+            <span class="subtitle">Ingeniería Electrónica</span>
+            <span class="date">Graduación Esperada: Dic 2026</span>
+        </div>
+        <ul style="margin-bottom: 0;">
+            <li><span class="highlight">Conocimientos Clave:</span> Inteligencia Artificial, Sistemas Dinámicos, Procesamiento Digital (DSP), Sistemas en Tiempo Real, Análisis de Datos.</li>
+            <li><span class="highlight">Actividades:</span> Miembro activo de los Grupos de Investigación en Inteligencia Artificial y Síntesis de Audio (UNAL).</li>
+        </ul>
+    </div>
+
+    <h2>Experiencia Profesional</h2>
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Desarrollador de Software & IA</span>
+            <span class="date">Ene 2025 - Presente</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Grupo de Investigación de IA, Universidad Nacional de Colombia - Manizales, Colombia</div>
+        <ul>
+            <li>Lideré el desarrollo de un sistema de clasificación automatizada utilizando Machine Learning (Python), logrando un <span class="highlight">95% de precisión en inferencia</span>.</li>
+            <li>Diseñé e integré bases de datos SQL para la gestión, enriquecimiento y monitoreo eficiente de registros masivos.</li>
+            <li>El proyecto fue <span class="highlight">escalado e implementado con éxito por la Policía Nacional de Colombia</span> para sistemas de vigilancia, demostrando capacidad de llevar productos desde cero a producción (0 a 1).</li>
+        </ul>
+    </div>
+
+    <h2>Proyectos Técnicos & Automatización</h2>
+    
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Arquitectura Multi-Agente Autónoma para Bases de Datos (RestauranteIA)</span>
+            <span class="date">2025</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Python, LangChain, Ollama, Llama 3.1, SQL</div>
+        <ul>
+            <li>Desarrollé un sistema de agentes inteligentes 100% autónomo para la gestión automatizada de inventarios interactuando con bases de datos.</li>
+            <li>Implementé <span class="highlight">Tool Calling nativo con validación estricta de datos (Pydantic)</span> para asegurar que la IA ejecute funciones de manera determinista, eliminando alucinaciones y falsos positivos.</li>
+            <li>Esta arquitectura fundamenta mi capacidad para <span class="highlight">integrar flujos automatizados de IA en CRMs</span> (ej. HubSpot, Pipedrive) para personalizar y escalar la interacción con prospectos comerciales.</li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Orquestación de IA Serverless & APIs de Alto Rendimiento (Antioquia Zana)</span>
+            <span class="date">2026</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">FastAPI, Python, Groq API, Vercel, React</div>
+        <ul>
+            <li>Desplegué un backend Serverless en Python a través de Vercel para orquestar modelos masivos (Llama 3.3 70B) vía API.</li>
+            <li>Optimicé los tiempos de respuesta (warm starts <800ms) para garantizar una experiencia de usuario inmediata y consumo eficiente de APIs, vital para <span class="highlight">motores de prospección automatizada y análisis de respuestas en tiempo real</span>.</li>
+            <li>Desarrollé el frontend web con React y métricas de telemetría de extremo a extremo.</li>
+        </ul>
+    </div>
+
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Optimización de Pipelines de Datos y Scraping B2B</span>
+            <span class="date">2026</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Python, Manipulación de Datos (Pandas), Hojas de Cálculo Avanzadas</div>
+        <ul>
+            <li>Desarrollo constante de scripts en Python para raspar, limpiar y estructurar bases de datos complejas para su uso en CRMs (prospección B2B).</li>
+            <li>Implementación de algoritmos para filtrar y priorizar cuentas clave (Decisores, Series A/B startups, AdTech) optimizando el funnel comercial.</li>
+        </ul>
+    </div>
+    
+    <div class="section-content">
+        <div class="flex-between">
+            <span class="title">Procesamiento de Señales e Ingeniería de Bajo Nivel (FPGA/DSP)</span>
+            <span class="date">2025 - 2026</span>
+        </div>
+        <div class="subtitle" style="margin-bottom: 4px;">Verilog, C++, Optimización de Algoritmos</div>
+        <ul>
+            <li>Construcción de arquitecturas asimétricas y hardware desde cero para resolver cuellos de botella (<span class="highlight">latencias de 2.1ms</span>).</li>
+            <li>Aunque centrado en hardware, esto evidencia mi <span class="highlight">pensamiento altamente analítico</span>, resolución de problemas complejos mediante pruebas A/B estructuradas y capacidad de iteración técnica constante (Growth Mindset).</li>
+        </ul>
+    </div>
+
+    <h2>Habilidades Técnicas & Comerciales</h2>
+    <div class="section-content">
+        <div class="skills-grid">
+            <div class="skill-category">IA & Automatización:</div>
+            <div class="skill-list">OpenAI API, Prompt Engineering, LangChain, Tool Calling, Pydantic, Make/Zapier (Lógica de automatización), LLMs Locales (Ollama).</div>
+            
+            <div class="skill-category">Datos & Backend:</div>
+            <div class="skill-list">Python, SQL, SQLite, FastAPI, Vercel, Análisis de Datos, Web Scraping.</div>
+            
+            <div class="skill-category">Desarrollo Web:</div>
+            <div class="skill-list">TypeScript, React, HTML/CSS.</div>
+            
+            <div class="skill-category">Conceptos Comerciales:</div>
+            <div class="skill-list">Estructuración de Pipelines CRM (HubSpot/Pipedrive), B2B Outbound Logic, Cualificación de Leads, Optimización de Métricas de Conversión.</div>
+        </div>
+    </div>
+
+    <h2>Certificaciones & Idiomas</h2>
+    <div class="section-content">
+        <div class="skills-grid">
+            <div class="skill-category">Certificaciones:</div>
+            <div class="skill-list">Deep Learning Specialization - Coursera / DeepLearning.AI</div>
+            
+            <div class="skill-category">Idiomas:</div>
+            <div class="skill-list">Español (Nativo), Inglés (Avanzado - Nivel B2) - Dominio de redacción persuasiva y documentación técnica.</div>
+        </div>
+    </div>
+
+</body>
+</html>

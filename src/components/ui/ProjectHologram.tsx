@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, GitBranch, X, Cpu } from 'lucide-react';
 import type { TechItem, TelemetryMetric } from '../../data/projects';
 import { InteractiveSequencer } from './InteractiveSequencer';
+import { SystemDiagnostic } from './SystemDiagnostic';
+import { preWarmAudioContext } from '../../audio/BassSynthNode';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Props
@@ -102,9 +104,11 @@ export default function ProjectHologram({
               <X className="w-5 h-5" />
             </button>
           </div>
-          {/* Sequencer fills the rest */}
+          {/* Sequencer fills the rest — wrapped in hardware feature gate */}
           <div className="flex-1 overflow-hidden p-4 md:p-6">
-            <InteractiveSequencer onClose={() => setSequencerOpen(false)} />
+            <SystemDiagnostic>
+              <InteractiveSequencer onClose={() => setSequencerOpen(false)} />
+            </SystemDiagnostic>
           </div>
         </motion.div>
       )}
@@ -123,7 +127,7 @@ export default function ProjectHologram({
         onClick={(e) => e.stopPropagation()}
         className={[
           'relative overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/30',
-          'w-[95vw] md:w-[90vw] max-w-4xl max-h-[92vh] min-h-[70vh]',
+          'w-[95vw] md:w-[90vw] max-w-4xl max-h-[92dvh] min-h-[70dvh]',
           'flex flex-col',
           'bg-black/40 backdrop-blur-xl',
           'border-[0.5px] border-cyan-500/20 rounded-2xl',
@@ -201,7 +205,9 @@ export default function ProjectHologram({
                 </p>
               </div>
               <button
-                onClick={() => setSequencerOpen(true)}
+                id="launch-sequencer-btn"
+                onTouchStart={() => preWarmAudioContext()}
+                onClick={() => { preWarmAudioContext(); setSequencerOpen(true); }}
                 className="group relative flex items-center gap-3 px-6 py-4 font-mono font-bold tracking-widest uppercase text-sm
                   bg-cyan-500/10 hover:bg-cyan-500/20 border-2 border-cyan-400/70 hover:border-cyan-400
                   text-cyan-300 hover:text-cyan-200 rounded-xl transition-all duration-300
